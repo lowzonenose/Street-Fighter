@@ -1,0 +1,26 @@
+/	hit_box
+	ajouter image bloquage
+	cooldown des attaques
+	empecher de sortir de lecran
+X	gerer les degats
+/	barre de vie
+/	timer du combat
+/	menu de demarrage
+	menu choix mode de jeu:
+		1v1
+		1vsIA (IA + en + forte)
+		IA vs IA
+	menu choix perso
+	menu choix map (chaque personne choisi + choix aleatoire entre les deux map voté)
+/	menu fin de partie
+	IA
+	son
+	animations
+	ajouter de nouvelles attaques
+3	ajouter nouveaux perso
+
+	TUTORIEL ??
+
+
+
+
