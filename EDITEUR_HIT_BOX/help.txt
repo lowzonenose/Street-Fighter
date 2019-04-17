@@ -1,0 +1,7 @@
+Pour creer une hit_box:
+	-appuyer sur echap
+	-dans la console -> un input apparait: "image"
+	-charger le nom de son image (changer le path dans le programme pour aller plus vite)
+	-clique gauche appuyer pour faire un rectangle sur l'image et clique droit pour le sauvegarder
+	-une fois fini -> appuyer sur echap -> input -> "save"
+
