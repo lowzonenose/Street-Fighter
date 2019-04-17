@@ -9,6 +9,8 @@ setting = {
 	"posX_fond": 0,
 	"speed": 3.5,
 	"delai_reset_touche": 0.15,
+	"cooldown_attaque": 0.5,
+	"degat": 4,
 	"vie": 1000,
 
 
