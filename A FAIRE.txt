@@ -1,5 +1,5 @@
 /	hit_box
-	ajouter image bloquage
+	refaire hit_box d'attaques
 	cooldown des attaques
 	empecher de sortir de lecran
 X	gerer les degats
@@ -11,7 +11,7 @@ X	gerer les degats
 		1vsIA (IA + en + forte)
 		IA vs IA
 	menu choix perso
-	menu choix map (chaque personne choisi + choix aleatoire entre les deux map voté)
+	menu choix map (chaque personne choisi + choix aleatoire entre les deux map votÃ©)
 /	menu fin de partie
 	IA
 	son
