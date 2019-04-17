@@ -9,7 +9,7 @@ setting = {
 	"posX_fond": 0,
 	"speed": 3.5,
 	"delai_reset_touche": 0.15,
-	"vie": 100,
+	"vie": 1000,
 
 
 	"touche_joueur2": {
