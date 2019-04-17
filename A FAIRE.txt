@@ -1,7 +1,7 @@
 /	hit_box
 	refaire hit_box d'attaques
 	cooldown des attaques
-	empecher de sortir de lecran
+X	empecher de sortir de lecran
 X	gerer les degats
 /	barre de vie
 /	timer du combat
@@ -15,7 +15,7 @@ X	gerer les degats
 /	menu fin de partie
 	IA
 	son
-	animations
+	animations (?)
 	ajouter de nouvelles attaques
 3	ajouter nouveaux perso
 
