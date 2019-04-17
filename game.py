@@ -26,11 +26,9 @@ def input_player(event, name_player, num_player):
 		if event.key == setting["touche_joueur" + str(num_player)]["blocking"]:					#ACTION
 			name_player.action = "blocking"
 		elif event.key == setting["touche_joueur" + str(num_player)]["h_punch"]:					
-			name_player.action = "h_punch"
-			name_player.debut_action = time.time()
+			name_player.demander_attaque("h_punch")
 		elif event.key == setting["touche_joueur" + str(num_player)]["l_kick"]:
-			name_player.action = "l_kick"
-			name_player.debut_action = time.time()
+			name_player.demander_attaque("l_kick")
 
 
 		if event.key == setting["touche_joueur" + str(num_player)]["victory1"]:					#VICTOIRE
@@ -115,8 +113,8 @@ def main():
 			joueur1.gerer_degat(joueur2)
 			joueur2.gerer_degat(joueur1)
 
-			#joueur1.afficher()
-			#joueur2.afficher()
+			joueur1.afficher()
+			joueur2.afficher()
 
 			interface.draw_bg(1)
 			interface.barre_de_vie(joueur1, joueur2)
@@ -124,7 +122,7 @@ def main():
 			joueur2.draw()
 			quitter = interface.temps()
 
-			if joueur1.vie < 0 or joueur2.vie < 0 or quitter:
+			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				fin_de_partie = True
 				en_jeu = False
 				time.sleep(2)

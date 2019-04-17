@@ -18,7 +18,7 @@ class Player:
 		self.action = None
 		self.debut_direction = None
 		self.debut_position = None
-		self.debut_action = None
+		self.debut_action = time.time()
 		self.posX = 0
 		self.posY = 0
 		self.speed = (speed * setting["l_ecran"]) / 1200
@@ -176,7 +176,9 @@ class Player:
 					ennemi.toucher = True
 
 			if ennemi.toucher:
-				ennemi.vie -= 2
+				ennemi.vie -= setting["degat"]
+				if ennemi.vie < 0:
+					ennemi.vie = 0
 				ennemi.toucher = False
 
 
@@ -205,6 +207,12 @@ class Player:
 				return False
 			elif self.position == "crouch":
 				self.crouch()
+
+	def demander_attaque(self, attaque):
+		if time.time() - self.debut_action > setting["cooldown_attaque"]:
+			self.action = attaque
+			self.debut_action = time.time()
+
 
 
 	def recup_action_active(self):						#recupere les action du joueur pour choisir les bonnes attaques selon les combos de touches
