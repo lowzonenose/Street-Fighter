@@ -93,7 +93,7 @@ def main():
 
 		interface = Interface.Interface(ecran)
 		joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"])
-		joueur2 = Player.Player(ecran, "cammy", 2, setting["speed"])
+		joueur2 = Player.Player(ecran, "ken", 2, setting["speed"])
 
  
 
