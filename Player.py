@@ -50,11 +50,11 @@ class Player:
 	def draw(self):
 		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_image)
 		self.ecran.blit(self.image_active, self.rect_image)
-		for i in self.hit_box_active:
+		"""for i in self.hit_box_active:
 			pygame.draw.rect(self.ecran, (0,0,255), i, 5)	
 		if self.attaque_hit_box is not None:
 			for i in self.attaque_hit_box:
-				pygame.draw.rect(self.ecran, (255,0,0), i, 5)
+				pygame.draw.rect(self.ecran, (255,0,0), i, 5)"""
 			
 		
 	def charger_images(self):
