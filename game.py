@@ -113,13 +113,15 @@ def main():
 			joueur1.gerer_degat(joueur2)
 			joueur2.gerer_degat(joueur1)
 
-			joueur1.afficher()
-			joueur2.afficher()
+			#joueur1.afficher()
+			#joueur2.afficher()
+
 
 			interface.draw_bg(1)
 			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
 			joueur2.draw()
+
 			quitter = interface.temps()
 
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:

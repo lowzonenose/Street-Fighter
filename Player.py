@@ -25,6 +25,8 @@ class Player:
 		self.hit_box_perso = []
 		self.ordre_hit_box = {}
 		self.hit_box_active = []
+		self.hit_box_attaque_perso = []
+		self.ordre_attaque_hit_box = {}
 		self.attaque_hit_box = None
 		self.vie = setting["vie"]
 		self.toucher = False
@@ -35,6 +37,8 @@ class Player:
 	def init_perso(self):
 		self.charger_images()
 		self.charger_hit_box()
+		self.convertir_hit_box(self.hit_box_perso)
+		self.convertir_hit_box(self.hit_box_attaque_perso)
 		self.agrandir_taille()
 		self.pos_start(self.num_joueur)
 
@@ -46,10 +50,11 @@ class Player:
 	def draw(self):
 		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_image)
 		self.ecran.blit(self.image_active, self.rect_image)
-		"""for i in self.hit_box_active:
+		for i in self.hit_box_active:
 			pygame.draw.rect(self.ecran, (0,0,255), i, 5)	
 		if self.attaque_hit_box is not None:
-			pygame.draw.rect(self.ecran, (255,0,0), self.attaque_hit_box, 5)"""
+			for i in self.attaque_hit_box:
+				pygame.draw.rect(self.ecran, (255,0,0), i, 5)
 			
 		
 	def charger_images(self):
@@ -98,12 +103,36 @@ class Player:
 						self.hit_box_perso.append(json.load(read_file))
 						self.ordre_hit_box[key] = len(self.hit_box_perso) - 1
 
+					with open("hit_box/" + self.nom + "/attaque_" + self.nom + "_right/" + key[2:] + ".json", "r") as read_file:
+						self.hit_box_attaque_perso.append(json.load(read_file))
+						self.ordre_attaque_hit_box[key] = len(self.hit_box_attaque_perso) - 1
+
 				elif key[0] == "l":
 					with open("hit_box/" + self.nom + "/" + self.nom + "_left/" + key[2:] + ".json", "r") as read_file:
 						self.hit_box_perso.append(json.load(read_file))
 						self.ordre_hit_box[key] = len(self.hit_box_perso) - 1
+
+					with open("hit_box/" + self.nom + "/attaque_" + self.nom + "_left/" + key[2:] + ".json", "r") as read_file:
+						self.hit_box_attaque_perso.append(json.load(read_file))
+						self.ordre_attaque_hit_box[key] = len(self.hit_box_attaque_perso) - 1
 			except:
 				pass
+
+
+	def convertir_hit_box(self, hit_box):
+		"""converti les hit_box créé via l'éditeur afin d'avoir longueur et largeur de rectangle positif
+			pour pouvoir appliquer  rect.colliderect(rect2)"""
+		for i in range(len(hit_box)):
+			for j in range(len(hit_box[i])):
+				x, y, w, h = hit_box[i][j]
+				if w < 0:
+					x += w
+					w = -w
+					
+				if h < 0:
+					y += h
+					h = -h
+				hit_box[i][j] = (x, y, w, h)
 
 
 	def agrandir_taille(self):					#conserve les bonnes proportions 
@@ -153,27 +182,32 @@ class Player:
 			x, y, w, h = self.hit_box_perso[self.ordre_hit_box[self.nom_image_active]][i]	
 			x += self.rect_image.left
 			y += self.rect_image.top
-
 			self.hit_box_active.append((x, y, w, h))
-		try:
-			self.attaque_hit_box = hit_box["attaque"][self.nom_image_active]
-			x, y, w, h = self.attaque_hit_box
-			x = int(x * (hauteur * 2 ) / 448) + self.rect_image.left 
-			y = int(y * (hauteur * 2 ) / 448) + self.rect_image.top 
 
-			w = int(w * (hauteur * 2 ) / 448) 
-			h = int(h * (hauteur * 2 ) / 448)
-			self.attaque_hit_box = (x, y, w, h)
+		try:
+			self.attaque_hit_box = []
+			for i in range(len(self.hit_box_attaque_perso[self.ordre_attaque_hit_box[self.nom_image_active]])):
+				x, y, w, h = self.hit_box_attaque_perso[self.ordre_attaque_hit_box[self.nom_image_active]][i]
+				x = int(x * (hauteur * 2 ) / 448) + self.rect_image.left 
+				y = int(y * (hauteur * 2 ) / 448) + self.rect_image.top 
+
+				w = int(w * (hauteur * 2 ) / 448) 
+				h = int(h * (hauteur * 2 ) / 448)
+				self.attaque_hit_box.append((x, y, w, h))
 		except:
 			self.attaque_hit_box = None
 
 
 	def gerer_degat(self, ennemi):
 		if self.attaque_hit_box is not None:
-			for hit_box in ennemi.hit_box_active:
-				n_hit_box = pygame.Rect(hit_box[0], hit_box[1], hit_box[2], hit_box[3])
-				if n_hit_box.colliderect(self.attaque_hit_box):
-					ennemi.toucher = True
+			for attaque in self.attaque_hit_box:
+				n_attaque_hit_box = pygame.Rect(attaque[0], attaque[1], attaque[2], attaque[3])
+
+				for hit_box in ennemi.hit_box_active:
+					n_hit_box = pygame.Rect(hit_box[0], hit_box[1], hit_box[2], hit_box[3])
+
+					if n_hit_box.colliderect(n_attaque_hit_box):
+						ennemi.toucher = True
 
 			if ennemi.toucher:
 				ennemi.vie -= setting["degat"]
