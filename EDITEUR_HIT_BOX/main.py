@@ -19,6 +19,8 @@ def main():
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					editeur.console()
+				if event.key == pygame.K_SPACE:
+					editeur.ouvrir_image()
 
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1:
