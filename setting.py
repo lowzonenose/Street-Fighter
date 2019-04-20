@@ -37,5 +37,12 @@ setting = {
 		"victory2": pygame.K_h,
 	},
 
+	"diminution": {
+		"ken": 1,
+		"ryu": 1,
+		"cammy": 1,
+		"t_hawk": 1.3,
+	}
+
 
 }
