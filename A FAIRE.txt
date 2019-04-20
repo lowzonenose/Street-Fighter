@@ -1,6 +1,6 @@
-/	hit_box
-	refaire hit_box d'attaques
-	cooldown des attaques
+X	hit_box
+X	refaire hit_box d'attaques
+/	cooldown des attaques
 X	empecher de sortir de lecran
 X	gerer les degats
 /	barre de vie
@@ -17,7 +17,7 @@ X	gerer les degats
 	son
 	animations (?)
 	ajouter de nouvelles attaques
-3	ajouter nouveaux perso
+4	ajouter nouveaux perso
 
 	TUTORIEL ??
 

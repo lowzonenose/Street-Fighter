@@ -137,21 +137,33 @@ class Player:
 				hit_box[i][j] = (x, y, w, h)
 
 
-	def agrandir_taille(self):					#conserve les bonnes proportions 
-		hauteur = int((setting["l_ecran"] * 448) / 1242)			
+	def agrandir_taille(self):					#conserve les bonnes proportions    
+		hauteur = int((setting["l_ecran"] * 448) / 1242)	
 		for key in self.image_perso.keys():
 			rect_image = self.image_perso[key].get_rect()
-			self.image_perso[key] = pygame.transform.scale(self.image_perso[key], [int(rect_image.width * (hauteur *2 ) / 448), int(rect_image.height * (hauteur * 2) / 448)])
+			self.image_perso[key] = pygame.transform.scale(self.image_perso[key], [int((rect_image.width * (hauteur *2 ) / 448) / setting["diminution"][self.nom]), 
+																				   int((rect_image.height * (hauteur * 2) / 448) / setting["diminution"][self.nom])])
 
 		for i in range(len(self.hit_box_perso)):
 			for j in range(len(self.hit_box_perso[i])):
 				x, y, w, h = self.hit_box_perso[i][j]
-				x = int(x * (hauteur * 2 ) / 448)
-				y = int(y * (hauteur * 2 ) / 448)
+				x = int((x * (hauteur * 2 ) / 448) / setting["diminution"][self.nom])
+				y = int((y * (hauteur * 2 ) / 448) / setting["diminution"][self.nom])
 
-				w = int(w * (hauteur * 2 ) / 448) 
-				h = int(h * (hauteur * 2 ) / 448)
+				w = int((w * (hauteur * 2 ) / 448) / setting["diminution"][self.nom])
+				h = int((h * (hauteur * 2 ) / 448) / setting["diminution"][self.nom])
 				self.hit_box_perso[i][j] = (x, y, w, h)
+
+		for i in range(len(self.hit_box_attaque_perso)):
+			for j in range(len(self.hit_box_attaque_perso[i])):
+				x, y, w, h = self.hit_box_attaque_perso[i][j]
+				x = int(x / setting["diminution"][self.nom])
+				y = int(y  / setting["diminution"][self.nom])
+
+				w = int(w / setting["diminution"][self.nom])
+				h = int(h / setting["diminution"][self.nom])
+				self.hit_box_attaque_perso[i][j] = (x, y, w, h)
+
 
 
 	def afficher_triangle(self):
