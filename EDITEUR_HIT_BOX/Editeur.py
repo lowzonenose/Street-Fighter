@@ -5,7 +5,7 @@ class Editeur:
 	def __init__(self):
 		self.nom = "t_hawk"
 		self.sens = "left"
-		self.attaque = ""  #attaque_
+		self.attaque = "attaque_"  #attaque_
 		self.direction = self.nom + "/"+ self.nom + "_" + self.sens
 		self.path = "../image/" + self.direction + "/"
 		self.save_path = "../hit_box/" + self.nom + "/" + self.attaque + self.nom + "_" + self.sens + "/"
