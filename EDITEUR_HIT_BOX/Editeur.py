@@ -4,13 +4,13 @@ import json
 class Editeur:
 	def __init__(self):
 		self.nom = "t_hawk"
-		self.sens = "right"
+		self.sens = "left"
 		self.attaque = ""  #attaque_
 		self.direction = self.nom + "/"+ self.nom + "_" + self.sens
 		self.path = "../image/" + self.direction + "/"
 		self.save_path = "../hit_box/" + self.nom + "/" + self.attaque + self.nom + "_" + self.sens + "/"
 		self.image_ouverte = False
-		self.taille = 7
+		self.taille = 6
 		self.mouse_start = (0, 0)
 		self.mouse_pressed = False
 		self.hit_box = []
