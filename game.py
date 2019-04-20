@@ -90,8 +90,8 @@ def main():
 			pygame.display.flip()
 
 		interface = Interface.Interface(ecran)
-		joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"])
-		joueur2 = Player.Player(ecran, "ken", 2, setting["speed"])
+		joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
+		joueur2 = Player.Player(ecran, "ken", 2, setting["speed"], (255,0,0))
 
  
 
