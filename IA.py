@@ -12,18 +12,16 @@ class IA(Player.Player):
 
 	def mouvement_random(self):
 		if time.time() - self.temporisation_mouvement > 0.2:
-			aleatoire = random.randrange(121)
-			if aleatoire <= 40:
+			aleatoire = random.randrange(111)
+			if aleatoire <= 60:
 				self.direction = "idle"
-			elif aleatoire > 40 and aleatoire <= 70:
+			elif aleatoire > 60 and aleatoire <= 80:
 				self.direction = "left"
-			elif aleatoire > 70 and aleatoire <= 100:
+			elif aleatoire > 80 and aleatoire <= 100:
 				self.direction = "right"
-			if aleatoire > 100 and aleatoire <= 120:
+			if aleatoire > 100 and aleatoire <= 110:
 				if self.position not in ["jump_up", "jump_down"]:
 					self.position = "jump_up"
-				if self.position in ["jump_up", "jump_down"]:
-					print("bbb")
-					self.jump()
+			
 			self.temporisation_mouvement = time.time()
 
