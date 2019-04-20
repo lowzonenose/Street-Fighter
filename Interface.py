@@ -85,14 +85,13 @@ class Interface:
 		taille_vie = pygame.Rect(52, 22, (((rect_ecran.centerx * 0.75) * joueur1.vie)/ 1000)-4, 46)
 		taille_vie2 = pygame.Rect(rect_ecran.width - rect_ecran.centerx * 0.75 - 48, 22, (((rect_ecran.centerx * 0.75) * joueur2.vie)/ 1000)-4, 46)
 		
-		perso1 = [joueur1, (0,255,0), taille_vie]
-		perso2 = [joueur2, (0,255,0), taille_vie2]
-		for i in [perso1, perso2]:
-			if i[0].vie <= setting["vie"] * 0.20:
-				i[1] = (255,0,0)
-			elif i[0].vie <= setting["vie"] * 0.4:
-				i[1] = (255,128,0)
-			pygame.draw.rect(self.ecran, i[1], i[2])
+		for perso, barre_vie in [(joueur1, taille_vie), (joueur2, taille_vie2)]:
+			couleur = (0,255,0)
+			if perso.vie <= setting["vie"] * 0.10:
+				couleur = (255,0,0)
+			elif perso.vie <= setting["vie"] * 0.4:
+				couleur = (255,128,0)
+			pygame.draw.rect(self.ecran, couleur, barre_vie)
 		
 
 
