@@ -10,6 +10,7 @@ class Interface:
 		self.timer = 120
 		self.debut = time.time()
 		self.myfont = pygame.font.SysFont("monospace", 60)
+		self.font_barre_vie = pygame.font.SysFont("monospace", 40)
 		self.label = self.myfont.render(str(self.timer), 1, (0,0,0))
 		self.rect = self.label.get_rect()
 
@@ -75,6 +76,13 @@ class Interface:
 		self.ecran.blit(quit, self.rect_quit)
 
 
+	def nom_barre_vie(self, joueur, couleur, position):
+		nom = self.font_barre_vie.render(joueur, 1, couleur)
+		rect_nom = nom.get_rect()
+		rect_nom.center = position
+		self.ecran.blit(nom, rect_nom)
+		
+
 	def barre_de_vie(self, joueur1, joueur2):
 		rect_ecran = self.ecran.get_rect()
 		fond_barre_de_vie = pygame.Rect(50, 20, rect_ecran.centerx * 0.75, 50)
@@ -84,8 +92,17 @@ class Interface:
 
 		taille_vie = pygame.Rect(52, 22, (((rect_ecran.centerx * 0.75) * joueur1.vie)/ 1000)-4, 46)
 		taille_vie2 = pygame.Rect(rect_ecran.width - rect_ecran.centerx * 0.75 - 48, 22, (((rect_ecran.centerx * 0.75) * joueur2.vie)/ 1000)-4, 46)
-		pygame.draw.rect(self.ecran, (0,255,0), taille_vie)
-		pygame.draw.rect(self.ecran, (0,255,0), taille_vie2)
+		
+		for perso, barre_vie in [(joueur1, taille_vie), (joueur2, taille_vie2)]:
+			couleur = (0,255,0)
+			if perso.vie <= setting["vie"] * 0.10:
+				couleur = (255,0,0)
+			elif perso.vie <= setting["vie"] * 0.4:
+				couleur = (255,128,0)
+			pygame.draw.rect(self.ecran, couleur, barre_vie)
+
+		self.nom_barre_vie("joueur1", (0,0,255), fond_barre_de_vie.center)
+		self.nom_barre_vie("joueur2", (255,0,0), fond_barre_de_vie2.center)
 
 
 	def fin_de_partie2(self, joueur1, joueur2):

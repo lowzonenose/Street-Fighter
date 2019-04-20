@@ -5,10 +5,11 @@ from setting import setting
 from hit_box import hit_box
 
 class Player:
-	def __init__(self, ecran, nom, num_joueur, speed):
+	def __init__(self, ecran, nom, num_joueur, speed, couleur):
 		self.ecran = ecran
 		self.num_joueur = num_joueur
 		self.nom = nom
+		self.couleur = couleur
 		self.image_perso = {}
 		self.image_active = None
 		self.nom_image_active = None
@@ -50,6 +51,7 @@ class Player:
 	def draw(self):
 		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_image)
 		self.ecran.blit(self.image_active, self.rect_image)
+		self.afficher_triangle()
 		"""for i in self.hit_box_active:
 			pygame.draw.rect(self.ecran, (0,0,255), i, 5)	
 		if self.attaque_hit_box is not None:
@@ -162,6 +164,12 @@ class Player:
 				h = int(h / setting["diminution"][self.nom])
 				self.hit_box_attaque_perso[i][j] = (x, y, w, h)
 
+
+
+	def afficher_triangle(self):
+		posX = self.rect_image.centerx 
+		posY = self.rect_image.top - 20
+		pygame.draw.polygon(self.ecran, self.couleur, [(posX, posY), (posX - 10, posY - 15), (posX + 10, posY - 15)])
 
 
 	def pos_start(self, joueur):					#initialise les position de chaque joueur en debut de partie
