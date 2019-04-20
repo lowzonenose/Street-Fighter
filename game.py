@@ -1,5 +1,6 @@
 import pygame
 import time
+import os
 
 import Player
 import Interface
@@ -56,6 +57,7 @@ def input_player(event, name_player, num_player):
 
 def main():
 	pygame.init()
+	os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 200)   #position la fenetre a un endroit precis pour l'ouverture
 	ecran = pygame.display.set_mode([setting["l_ecran"], int((setting["l_ecran"] * 448) / 1242)])			 #cree l'écran
 	pygame.display.set_caption(setting["titre"])			#change le titre de la fenetre
 
