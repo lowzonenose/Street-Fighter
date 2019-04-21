@@ -25,3 +25,30 @@ class IA(Player.Player):
 			
 			self.temporisation_mouvement = time.time()
 
+
+	def intercepter_input(self, joueur):
+		"""
+		joueur.action
+		joueur.position
+		"""
+		if joueur.action is not None:
+			if joueur.position == "idle":
+				if joueur.action == "h_punch":
+					self.action = "blocking"
+				elif joueur.action == "l_kick":
+					self.action = "blocking"
+			elif joueur.position == "crouch":
+				if joueur.action == "h_punch":
+					self.position = "crouch"
+					self.action = "blocking"
+				elif joueur.action == "l_kick":
+					self.position = "crouch"
+					self.action = "blocking"
+			elif joueur.position in ["jump_up", "jump_down"] and self.position not in ["jump_up", "jump_down"]:
+				if joueur.action == "h_punch":
+					self.action = "blocking"
+				elif joueur.action == "l_kick":
+					self.action = "blocking"
+		else:
+			self.action = None
+

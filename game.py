@@ -105,7 +105,7 @@ def main():
 				input_player(event, joueur1, 1)
 				input_player(event, joueur2, 2)
 				
-				
+			ia.intercepter_input(joueur1)
 
 			joueur1.recup_action_active()													
 			joueur2.recup_action_active()	
