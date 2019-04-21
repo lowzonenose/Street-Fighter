@@ -105,16 +105,17 @@ def main():
 				input_player(event, joueur1, 1)
 				input_player(event, joueur2, 2)
 				
-			ia.intercepter_input(joueur1)
+			
 
 			joueur1.recup_action_active()													
 			joueur2.recup_action_active()	
 			
-			
-			
 			joueur1.update_hit_box()
 			joueur2.update_hit_box()
-			
+
+			ia.intercepter_input(joueur1)
+
+
 			joueur1.gerer_degat(joueur2)
 			joueur2.gerer_degat(joueur1)
 		
@@ -136,7 +137,7 @@ def main():
 
 
 			joueur1.draw()
-			joueur2.draw()
+			#joueur2.draw()
 			
 
 			quitter = interface.temps()
