@@ -30,6 +30,7 @@ class Player:
 		self.attaque_hit_box = None
 		self.vie = setting["vie"]
 		self.toucher = False
+		self.premiere_attaque = True
 		
 		self.init_perso()
 
@@ -52,7 +53,7 @@ class Player:
 		self.ecran.blit(self.image_active, self.rect_image)
 		"""for i in self.hit_box_active:
 			pygame.draw.rect(self.ecran, (0,0,255), i, 5)	
-		if self.attaque_hit_box is not None:
+		if self.attaque_hit_box:
 			for i in self.attaque_hit_box:
 				pygame.draw.rect(self.ecran, (255,0,0), i, 5)"""
 			
@@ -199,21 +200,23 @@ class Player:
 
 
 	def gerer_degat(self, ennemi):
-		if self.attaque_hit_box is not None:
-			for attaque in self.attaque_hit_box:
-				n_attaque_hit_box = pygame.Rect(attaque[0], attaque[1], attaque[2], attaque[3])
+		if self.premiere_attaque:
+			if self.attaque_hit_box:
+				for attaque in self.attaque_hit_box:
+					n_attaque_hit_box = pygame.Rect(attaque[0], attaque[1], attaque[2], attaque[3])
 
-				for hit_box in ennemi.hit_box_active:
-					n_hit_box = pygame.Rect(hit_box[0], hit_box[1], hit_box[2], hit_box[3])
+					for hit_box in ennemi.hit_box_active:
+						n_hit_box = pygame.Rect(hit_box[0], hit_box[1], hit_box[2], hit_box[3])
 
-					if n_hit_box.colliderect(n_attaque_hit_box):
-						ennemi.toucher = True
+						if n_hit_box.colliderect(n_attaque_hit_box):
+							ennemi.toucher = True
+							self.premiere_attaque = False
 
-			if ennemi.toucher:
-				ennemi.vie -= setting["degat"]
-				if ennemi.vie < 0:
-					ennemi.vie = 0
-				ennemi.toucher = False
+				if ennemi.toucher:
+					ennemi.vie -= setting["degat"]
+					if ennemi.vie < 0:
+						ennemi.vie = 0
+					ennemi.toucher = False
 
 
 	def placer_rect(self):								#recup taille image + placer l'image sur posX et posY
@@ -236,6 +239,7 @@ class Player:
 			return True
 		else:
 			self.action = None
+			self.premiere_attaque = True
 			if self.position == "idle":
 				self.idle()
 				return False

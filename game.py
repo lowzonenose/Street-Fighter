@@ -114,9 +114,10 @@ def main():
 			joueur2.update_hit_box()
 
 			ia.intercepter_input(joueur1)
+			ia.recup_action_active()
+			ia.update_hit_box()
 
-
-			joueur1.gerer_degat(joueur2)
+			joueur1.gerer_degat(ia)
 			joueur2.gerer_degat(joueur1)
 		
 
@@ -125,12 +126,11 @@ def main():
 			
 
 			interface.draw_bg(1)
-			interface.barre_de_vie(joueur1, joueur2)
+			interface.barre_de_vie(joueur1, ia)
 
 			#-------- TEST IA
-			ia.mouvement_random()
-			ia.recup_action_active()
-			ia.update_hit_box()
+			#ia.mouvement_random()
+			
 			#ia.afficher()
 			ia.draw()
 

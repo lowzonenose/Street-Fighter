@@ -27,7 +27,7 @@ class IA(Player.Player):
 
 
 	def tester_degat(self, joueur):
-		if joueur.attaque_hit_box is not None:
+		if joueur.attaque_hit_box:
 			for attaque in joueur.attaque_hit_box:
 				n_attaque_hit_box = pygame.Rect(attaque[0], attaque[1], attaque[2], attaque[3])
 
@@ -39,21 +39,22 @@ class IA(Player.Player):
 
 
 	def intercepter_input(self, joueur):
-		if joueur.action is not None:
-			if self.tester_degat(joueur):
-				if random.randrange(500) < 50:					
-					if joueur.position == "idle":
-						if joueur.action == "h_punch":
-							self.action = "blocking"
-						elif joueur.action == "l_kick":
-							self.action = "blocking"
-					elif joueur.position == "crouch" and self.position not in ["jump_up", "jump_down"]:
-						if joueur.action == "h_punch":
-							self.position = "crouch"
-							self.action = "blocking"
-						elif joueur.action == "l_kick":
-							self.position = "crouch"
-							self.action = "blocking"
-		else:
-			self.action = None
+		if joueur.premiere_attaque:
+			if joueur.action:
+				if self.tester_degat(joueur):
+					if random.randrange(100) < 50:					
+						if joueur.position == "idle":
+							if joueur.action == "h_punch":
+								self.action = "blocking"
+							elif joueur.action == "l_kick":
+								self.action = "blocking"
+						elif joueur.position == "crouch" and self.position not in ["jump_up", "jump_down"]:
+							if joueur.action == "h_punch":
+								self.position = "crouch"
+								self.action = "blocking"
+							elif joueur.action == "l_kick":
+								self.position = "crouch"
+								self.action = "blocking"
+			else:
+				self.action = None
 
