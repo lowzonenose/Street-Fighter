@@ -119,6 +119,7 @@ def main():
 
 			joueur1.gerer_degat(ia)
 			joueur2.gerer_degat(joueur1)
+			ia.gerer_degat(joueur1)
 		
 
 			#joueur1.afficher()
@@ -129,7 +130,7 @@ def main():
 			interface.barre_de_vie(joueur1, ia)
 
 			#-------- TEST IA
-			#ia.mouvement_random()
+			ia.mouvement_random()
 			
 			#ia.afficher()
 			ia.draw()

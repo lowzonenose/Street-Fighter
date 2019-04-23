@@ -51,11 +51,11 @@ class Player:
 	def draw(self):
 		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_image)
 		self.ecran.blit(self.image_active, self.rect_image)
-		"""for i in self.hit_box_active:
+		for i in self.hit_box_active:
 			pygame.draw.rect(self.ecran, (0,0,255), i, 5)	
 		if self.attaque_hit_box:
 			for i in self.attaque_hit_box:
-				pygame.draw.rect(self.ecran, (255,0,0), i, 5)"""
+				pygame.draw.rect(self.ecran, (255,0,0), i, 5)
 			
 		
 	def charger_images(self):
@@ -254,7 +254,7 @@ class Player:
 
 
 	def recup_action_active(self):						#recupere les action du joueur pour choisir les bonnes attaques selon les combos de touches
-		if self.direction == "idle" and self.position == "idle" and self.action is None:
+		if self.direction == "idle" and self.position == "idle" and not self.action:
 			self.idle()
 			return
 		if self.direction == "right":
