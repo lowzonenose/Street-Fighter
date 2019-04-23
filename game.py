@@ -3,6 +3,7 @@ import time
 import os
 
 import Player
+import IA
 import Interface
 from setting import setting
 
@@ -96,8 +97,6 @@ def main():
 		joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
 		joueur2 = Player.Player(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
 
-
- 
 
 		while en_jeu:
 			for event in pygame.event.get():					#recupere les evenements
