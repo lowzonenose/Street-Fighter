@@ -5,8 +5,8 @@ import Player
 
 
 class IA(Player.Player):
-	def __init__(self, ecran, nom, num_joueur, speed):
-		Player.Player.__init__(self, ecran, nom, num_joueur, speed)
+	def __init__(self, ecran, nom, num_joueur, speed, couleur):
+		Player.Player.__init__(self, ecran, nom, num_joueur, speed, couleur)
 		self.temporisation_mouvement = time.time() - 10
 
 
@@ -34,11 +34,8 @@ class IA(Player.Player):
 			for i in attaque:
 				x, y, w, h = i
 				hauteur = self.ecran.get_rect().width
-				x = int(x * (hauteur * 2 ) / 448) + self.rect_image.left 
-				y = int(y * (hauteur * 2 ) / 448) + self.rect_image.top 
-
-				w = int(w * (hauteur * 2 ) / 448) 
-				h = int(h * (hauteur * 2 ) / 448)
+				x += self.rect_image.left 
+				y += self.rect_image.top 
 				n_attaque_hit_box = pygame.Rect(x, y, w, h)
 
 				for hit_box in joueur.hit_box_active:
@@ -79,7 +76,7 @@ class IA(Player.Player):
 								self.position = "crouch"
 								self.action = "blocking"
 			elif self.tester_degat(joueur):
-				if random.randrange(1000) < 50:
+				if random.randrange(500) < 50:
 					self.action = list(self.ordre_attaque_hit_box.keys())[list(self.ordre_attaque_hit_box.values()).index(self.attaque_touche)][2:]
 					self.demander_attaque(self.action)
 			else:

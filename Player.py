@@ -158,11 +158,11 @@ class Player:
 		for i in range(len(self.hit_box_attaque_perso)):
 			for j in range(len(self.hit_box_attaque_perso[i])):
 				x, y, w, h = self.hit_box_attaque_perso[i][j]
-				x = int(x / setting["diminution"][self.nom])
-				y = int(y  / setting["diminution"][self.nom])
+				x = int(x * (hauteur * 2 ) / 448 / setting["diminution"][self.nom])
+				y = int(y * (hauteur * 2 ) / 448 / setting["diminution"][self.nom])
 
-				w = int(w / setting["diminution"][self.nom])
-				h = int(h / setting["diminution"][self.nom])
+				w = int(w * (hauteur * 2 ) / 448 / setting["diminution"][self.nom])
+				h = int(h * (hauteur * 2 ) / 448 / setting["diminution"][self.nom])
 				self.hit_box_attaque_perso[i][j] = (x, y, w, h)
 
 
@@ -209,11 +209,8 @@ class Player:
 			self.attaque_hit_box = []
 			for i in range(len(self.hit_box_attaque_perso[self.ordre_attaque_hit_box[self.nom_image_active]])):
 				x, y, w, h = self.hit_box_attaque_perso[self.ordre_attaque_hit_box[self.nom_image_active]][i]
-				x = int(x * (hauteur * 2 ) / 448) + self.rect_image.left 
-				y = int(y * (hauteur * 2 ) / 448) + self.rect_image.top 
-
-				w = int(w * (hauteur * 2 ) / 448) 
-				h = int(h * (hauteur * 2 ) / 448)
+				x += self.rect_image.left 
+				y += self.rect_image.top 
 				self.attaque_hit_box.append((x, y, w, h))
 		except:
 			self.attaque_hit_box = None
