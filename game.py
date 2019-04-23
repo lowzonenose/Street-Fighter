@@ -33,12 +33,15 @@ def input_player(event, name_player, num_player):
 			name_player.demander_attaque("l_kick")
 
 
-		if event.key == setting["touche_joueur" + str(num_player)]["victory1"]:					#VICTOIRE
-			name_player.victory1()
-			name_player.action = "victory"
-		elif event.key == setting["touche_joueur" + str(num_player)]["victory2"]:
-			name_player.victory2()
-			name_player.action = "victory"
+		try:
+			if event.key == setting["touche_joueur" + str(num_player)]["victory1"]:					#VICTOIRE
+				name_player.victory1()
+				name_player.action = "victory"
+			elif event.key == setting["touche_joueur" + str(num_player)]["victory2"]:
+				name_player.victory2()
+				name_player.action = "victory"
+		except:
+			pass
 
 	if event.type == pygame.KEYUP:
 		if event.key == setting["touche_joueur" + str(num_player)]["right"] or event.key == setting["touche_joueur" + str(num_player)]["left"]:						#cancel direction
@@ -101,8 +104,8 @@ def main():
 		interface = Interface.Interface(ecran)
 
 		if en_jeu_1v1:
-			joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
-			joueur2 = Player.Player(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
+			joueur1 = Player.Player(ecran, "ken", 1, setting["speed"], (0,0,255))
+			joueur2 = Player.Player(ecran, "cammy", 2, setting["speed"], (255,0,0))
 		while en_jeu_1v1:
 			for event in pygame.event.get():					#recupere les evenements
 				if event.type == pygame.QUIT:
@@ -129,16 +132,18 @@ def main():
 			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
 			joueur2.draw()
-
+			
 			quitter = interface.temps()
+			pygame.display.flip()
+			pygame.time.Clock().tick(setting["fps"])
 
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				fin_de_partie = True
 				en_jeu_1v1 = False
 				time.sleep(2)
 
-			pygame.display.flip()								#rafraichi l'écran 
-			pygame.time.Clock().tick(setting["fps"])			#limite la boucle a un nombre de fps precis evitant les accelerations
+											#rafraichi l'écran 
+						#limite la boucle a un nombre de fps precis evitant les accelerations
 
 
 		if en_jeu_vsIA:
@@ -174,14 +179,15 @@ def main():
 			joueur2.draw()
 
 			quitter = interface.temps()
+			pygame.display.flip()								#rafraichi l'écran 
+			pygame.time.Clock().tick(setting["fps"])			#limite la boucle a un nombre de fps precis evitant les accelerations
 
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				fin_de_partie = True
 				en_jeu_vsIA = False
 				time.sleep(2)
 
-			pygame.display.flip()								#rafraichi l'écran 
-			pygame.time.Clock().tick(setting["fps"])			#limite la boucle a un nombre de fps precis evitant les accelerations
+			
 
 
 

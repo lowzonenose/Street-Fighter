@@ -10,7 +10,7 @@ setting = {
 	"speed": 3.5,
 	"delai_reset_touche": 0.15,
 	"cooldown_attaque": 0.5,
-	"degat": 30,
+	"degat": 50,
 	"vie": 1000,
 
 
