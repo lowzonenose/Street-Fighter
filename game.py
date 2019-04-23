@@ -91,10 +91,10 @@ def main():
 			pygame.display.flip()
 
 		interface = Interface.Interface(ecran)
+
 		joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"])
 		joueur2 = Player.Player(ecran, "ken", 2, setting["speed"])
-		ia = IA.IA(ecran, "ken", 2, setting["speed"])
- 
+
 
 		while en_jeu:
 			for event in pygame.event.get():					#recupere les evenements
@@ -104,46 +104,28 @@ def main():
 
 				input_player(event, joueur1, 1)
 				input_player(event, joueur2, 2)
-				
-			
+					
 
 			joueur1.recup_action_active()													
 			joueur2.recup_action_active()	
 			
 			joueur1.update_hit_box()
 			joueur2.update_hit_box()
-
-			ia.intercepter_input(joueur1)
-			ia.recup_action_active()
-			ia.update_hit_box()
-
-			joueur1.gerer_degat(ia)
+			joueur1.gerer_degat(joueur2)
 			joueur2.gerer_degat(joueur1)
-			ia.gerer_degat(joueur1)
-		
 
 			#joueur1.afficher()
 			#joueur2.afficher()
-			
+
 
 			interface.draw_bg(1)
-			interface.barre_de_vie(joueur1, ia)
-
-			#-------- TEST IA
-			ia.mouvement_random()
-			
-			#ia.afficher()
-			ia.draw()
-
-
-
+			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
-			#joueur2.draw()
-			
+			joueur2.draw()
 
 			quitter = interface.temps()
 
-			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:   
+			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				fin_de_partie = True
 				en_jeu = False
 				time.sleep(2)
