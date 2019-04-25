@@ -12,14 +12,15 @@ X	gerer les degats
 		IA vs IA
 	menu choix perso
 	menu choix map (chaque personne choisi + choix aleatoire entre les deux map voté)
-/	menu fin de partie
+	menu fin de partie 
+		ajouter image perso sur lecran
 X	IA
 	son
-	animations (?)
+	animations (x)
 	ajouter de nouvelles attaques
 4	ajouter nouveaux perso
 
-	TUTORIEL ??
+	TUTORIEL ??  <==
 
 
 
