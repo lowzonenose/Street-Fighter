@@ -67,38 +67,51 @@ def main():
 
 #---------------------------------------------- instanciation onjets ----------------------------------------------------------------------------------------
 
-	
 	interface = Interface.Interface(ecran)
 
 #-------------------------------------------------- boucle du jeu --------------------------------------------------------------------------------------------
 
 	continuer = True
+	menu_principal = True
+	menu_choix_mode = False
 	en_jeu_1v1 = False
 	en_jeu_vsIA = False
-	menu = True
 	fin_de_partie = False
 	while continuer:
-		while menu:
+		while menu_principal:
 			for event in pygame.event.get():					#recupere les evenements
 				if event.type == pygame.QUIT:
 					continuer = False
-					menu = False
-
-				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_SPACE:
-						menu = False
-						en_jeu_vsIA = True
+					menu_principal = False
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1: 
 						if interface.rect_play.collidepoint(event.pos):
-							menu = False
-							en_jeu_1v1 = True
+							menu_principal = False
+							menu_choix_mode = True
 						elif interface.rect_quit.collidepoint(event.pos):
-							menu = False
+							menu_principal = False
 							continuer = False
 
 			interface.menu_principal()
+			pygame.display.flip()
+
+		while menu_choix_mode:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					menu_choix_mode = False
+					continuer = False
+
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					if event.button == 1:
+						if interface.rect_1v1.collidepoint(event.pos):
+							menu_choix_mode = False
+							en_jeu_1v1 = True
+						elif interface.rect_1vsIA.collidepoint(event.pos):
+							menu_choix_mode = False
+							en_jeu_vsIA = True
+
+			interface.menu_choix_mode()
 			pygame.display.flip()
 
 		interface = Interface.Interface(ecran)
@@ -106,21 +119,26 @@ def main():
 		if en_jeu_1v1:
 			joueur1 = Player.Player(ecran, "ken", 1, setting["speed"], (0,0,255))
 			joueur2 = Player.Player(ecran, "cammy", 2, setting["speed"], (255,0,0))
-		while en_jeu_1v1:
-			for event in pygame.event.get():					#recupere les evenements
+
+		if en_jeu_vsIA:
+			joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
+			joueur2 = IA.IA(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
+
+		while en_jeu_1v1 or en_jeu_vsIA:
+			for event in pygame.event.get():					
 				if event.type == pygame.QUIT:
 					continuer = False
 					en_jeu_1v1 = False
 
-				input_player(event, joueur1, 1)
-				input_player(event, joueur2, 2)
+				joueur1.input_player(event)
+				joueur2.input_player(event)
 					
 
 			joueur1.recup_action_active()													
 			joueur2.recup_action_active()	
 			
-			joueur1.update_hit_box()
-			joueur2.update_hit_box()
+			joueur1.update_hit_box(joueur2)
+			joueur2.update_hit_box(joueur1)
 			joueur1.gerer_degat(joueur2)
 			joueur2.gerer_degat(joueur1)
 
@@ -140,55 +158,8 @@ def main():
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				fin_de_partie = True
 				en_jeu_1v1 = False
-				time.sleep(2)
-
-											#rafraichi l'écran 
-						#limite la boucle a un nombre de fps precis evitant les accelerations
-
-
-		if en_jeu_vsIA:
-			joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
-			joueur2 = IA.IA(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
-		while en_jeu_vsIA:
-			for event in pygame.event.get():					#recupere les evenements
-				if event.type == pygame.QUIT:
-					continuer = False
-					en_jeu_vsIA = False
-
-				input_player(event, joueur1, 1)
-			
-			joueur2.mouvement_random()
-			
-			joueur2.recup_action_active()				
-			joueur1.recup_action_active()
-
-			joueur1.update_hit_box()
-			joueur2.update_hit_box()
-			joueur2.intercepter_input(joueur1)
-			joueur2.update_hit_box()
-			
-			joueur1.gerer_degat(joueur2)
-			joueur2.gerer_degat(joueur1)
-
-			#joueur1.afficher()
-			#joueur2.afficher()
-
-			interface.draw_bg(1)
-			interface.barre_de_vie(joueur1, joueur2)
-			joueur1.draw()
-			joueur2.draw()
-
-			quitter = interface.temps()
-			pygame.display.flip()								#rafraichi l'écran 
-			pygame.time.Clock().tick(setting["fps"])			#limite la boucle a un nombre de fps precis evitant les accelerations
-
-			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
-				fin_de_partie = True
 				en_jeu_vsIA = False
 				time.sleep(2)
-
-			
-
 
 
 		while fin_de_partie:
@@ -200,7 +171,7 @@ def main():
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1: 
 						if interface.rect_menu.collidepoint(event.pos):
-							menu = True
+							menu_principal = True
 							fin_de_partie = False
 							
 						elif interface.rect_quit.collidepoint(event.pos):

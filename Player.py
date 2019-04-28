@@ -196,7 +196,7 @@ class Player:
 		self.sol = self.posY
 
 
-	def update_hit_box(self):
+	def update_hit_box(self, joueur):
 		hauteur = int((setting["l_ecran"] * 448) / 1242)
 		self.hit_box_active = []
 		for i in range(len(self.hit_box_perso[self.ordre_hit_box[self.nom_image_active]])):
@@ -267,6 +267,56 @@ class Player:
 		if time.time() - self.debut_action > setting["cooldown_attaque"]:
 			self.action = attaque
 			self.debut_action = time.time()
+
+
+	def input_player(self, event):
+		if event.type == pygame.KEYDOWN:
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["right"]:						#DIRECTION
+				self.direction = "right"
+				self.last_direction = "right"
+			elif event.key == setting["touche_joueur" + str(self.num_joueur)]["left"]:
+				self.direction = "left"
+				self.last_direction = "left"
+				
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["down"]:						#POSITION
+				if self.position not in ["jump_up", "jump_down"]:
+					self.position = "crouch"
+				else: 
+					self.position = "jump_down"
+			elif event.key == setting["touche_joueur" + str(self.num_joueur)]["up"]:
+				self.test_position_up()
+
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["blocking"]:					#ACTION
+				self.action = "blocking"
+			elif event.key == setting["touche_joueur" + str(self.num_joueur)]["h_punch"]:					
+				self.demander_attaque("h_punch")
+			elif event.key == setting["touche_joueur" + str(self.num_joueur)]["l_kick"]:
+				self.demander_attaque("l_kick")
+
+
+			try:
+				if event.key == setting["touche_joueur" + str(self.num_joueur)]["victory1"]:					#VICTOIRE
+					self.victory1()
+					self.action = "victory"
+				elif event.key == setting["touche_joueur" + str(self.num_joueur)]["victory2"]:
+					self.victory2()
+					self.action = "victory"
+			except:
+				pass
+
+		if event.type == pygame.KEYUP:
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["right"] or event.key == setting["touche_joueur" + str(self.num_joueur)]["left"]:						#cancel direction
+				self.direction = "idle"
+
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["victory1"] or event.key == setting["touche_joueur" + str(self.num_joueur)]["victory2"]:
+				self.action = None
+
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["down"]:
+				if self.position == "crouch":
+					self.position = "idle"
+
+			if event.key == setting["touche_joueur" + str(self.num_joueur)]["blocking"]:
+				self.action = None
 
 
 
