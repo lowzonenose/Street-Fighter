@@ -10,7 +10,7 @@ class IA(Player.Player):
 		self.temporisation_mouvement = time.time() - 10
 
 
-	def mouvement_random(self):
+	def input_player(self, event):  
 		if time.time() - self.temporisation_mouvement > 0.2:
 			aleatoire = random.randrange(111)
 			if aleatoire <= 60:
@@ -76,9 +76,15 @@ class IA(Player.Player):
 								self.position = "crouch"
 								self.action = "blocking"
 			elif self.tester_degat(joueur):
-				if random.randrange(500) < 50:
+				if random.randrange(100) < 50:
 					self.action = list(self.ordre_attaque_hit_box.keys())[list(self.ordre_attaque_hit_box.values()).index(self.attaque_touche)][2:]
 					self.demander_attaque(self.action)
 			else:
 				self.action = None
 
+		
+
+	def update_hit_box(self, joueur):
+		super().update_hit_box(joueur)
+		self.intercepter_input(joueur)
+		super().update_hit_box(joueur)

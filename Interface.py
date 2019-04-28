@@ -60,20 +60,45 @@ class Interface:
 	def menu_principal(self):
 		self.ecran.fill((0,0,0))
 		rect_ecran = self.ecran.get_rect()
-		play = self.myfont.render("JOUER", 1, (0,0,0))
+		play = self.myfont.render("JOUER", 1, (0,255,0))
 		self.rect_play = play.get_rect()
 		self.rect_play.x = 200
 		self.rect_play.centery = rect_ecran.centery
 
-		quit = self.myfont.render("QUITTER", 1, (0,0,0))
+		quit = self.myfont.render("QUITTER", 1, (255,0,0))
 		self.rect_quit = quit.get_rect()
 		self.rect_quit.right = rect_ecran.right - 200
 		self.rect_quit.centery = rect_ecran.centery
 
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_play)
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit)
+		pygame.draw.rect(self.ecran, (255,255,255), self.rect_play, 2)
+		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit, 2)
 		self.ecran.blit(play, self.rect_play)
 		self.ecran.blit(quit, self.rect_quit)
+
+
+	def menu_choix_mode(self):
+		self.ecran.fill((0,0,0))
+		rect_ecran = self.ecran.get_rect()
+		choix = self.myfont.render("choix mode de jeu:", 1, (255,255,255))
+		self.rect_choix = choix.get_rect()
+		self.rect_choix.centerx = rect_ecran.centerx
+		self.rect_choix.y = 100
+
+		duo = self.myfont.render("1 vs 1", 1, (0,255,255))
+		self.rect_1v1 = duo.get_rect()
+		self.rect_1v1.x = 200
+		self.rect_1v1.centery = rect_ecran.centery + 100
+
+		solo = self.myfont.render("1 vs IA", 1, (0,255,255))
+		self.rect_1vsIA = solo.get_rect()
+		self.rect_1vsIA.right = rect_ecran.right - 200
+		self.rect_1vsIA.centery = rect_ecran.centery + 100
+
+		pygame.draw.rect(self.ecran, (255,255,0), self.rect_1v1, 2)
+		pygame.draw.rect(self.ecran, (255,255,0), self.rect_1vsIA, 2)
+		self.ecran.blit(choix, self.rect_choix)
+		self.ecran.blit(duo, self.rect_1v1)
+		self.ecran.blit(solo, self.rect_1vsIA)
 
 
 	def nom_barre_vie(self, joueur, couleur, position):
@@ -107,7 +132,7 @@ class Interface:
 
 	def fin_de_partie2(self, joueur1, joueur2):
 		rect_ecran = self.ecran.get_rect()
-		menu = self.myfont.render("MENU", 1, (0,0,0))
+		menu = self.myfont.render("MENU", 1, (0,255,0))
 		self.rect_menu = menu.get_rect()
 		self.rect_menu.x = 200
 		self.rect_menu.centery = rect_ecran.centery + 100
@@ -117,7 +142,7 @@ class Interface:
 		self.rect_quit.right = rect_ecran.right - 200
 		self.rect_quit.centery = rect_ecran.centery + 100
 
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_menu)
+		pygame.draw.rect(self.ecran, (255,255,255), self.rect_menu, 2)
 		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit)
 		self.ecran.blit(menu, self.rect_menu)
 		self.ecran.blit(quit, self.rect_quit)
@@ -130,7 +155,7 @@ class Interface:
 		self.rect_win = win.get_rect()
 		self.rect_win.centerx = rect_ecran.centerx
 		self.rect_win.y = 100
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_win)
+		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_win)
 		self.ecran.blit(win, self.rect_win) 
 							
 
