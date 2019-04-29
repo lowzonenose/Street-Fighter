@@ -101,6 +101,31 @@ class Interface:
 		self.ecran.blit(solo, self.rect_1vsIA)
 
 
+	def menu_pause(self):
+		self.ecran.fill((0,0,0,))
+		rect_ecran = self.ecran.get_rect()
+		pause = self.myfont.render("Pause", 1, (255,255,255))
+		self.rect_pause = pause.get_rect()
+		self.rect_pause.centerx = rect_ecran.centerx
+		self.rect_pause.y = 100
+
+		continuer = self.myfont.render("continuer", 1, (0,255,255))
+		self.rect_continuer = continuer.get_rect()
+		self.rect_continuer.x = 200
+		self.rect_continuer.centery = rect_ecran.centery + 100
+
+		quitter = self.myfont.render("quitter", 1, (0,255,255))
+		self.rect_quitter = quitter.get_rect()
+		self.rect_quitter.right = rect_ecran.right - 200
+		self.rect_quitter.centery = rect_ecran.centery + 100
+
+		pygame.draw.rect(self.ecran, (255,255,0), self.rect_continuer, 2)
+		pygame.draw.rect(self.ecran, (255,255,0), self.rect_quitter, 2)
+		self.ecran.blit(pause, self.rect_pause)
+		self.ecran.blit(continuer, self.rect_continuer)
+		self.ecran.blit(quitter, self.rect_quitter)
+
+
 	def nom_barre_vie(self, joueur, couleur, position):
 		nom = self.font_barre_vie.render(joueur, 1, couleur)
 		rect_nom = nom.get_rect()
@@ -131,6 +156,7 @@ class Interface:
 
 
 	def fin_de_partie2(self, joueur1, joueur2):
+		self.ecran.fill((0,0,0))
 		rect_ecran = self.ecran.get_rect()
 		menu = self.myfont.render("MENU", 1, (0,255,0))
 		self.rect_menu = menu.get_rect()
