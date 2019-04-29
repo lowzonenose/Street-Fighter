@@ -15,6 +15,7 @@ setting = {
 
 
 	"touche_joueur2": {
+		"pause": pygame.K_KP0,
 		"right": pygame.K_RIGHT,
 		"left": pygame.K_LEFT,
 		"up": pygame.K_UP,	
@@ -22,10 +23,11 @@ setting = {
 		"h_punch": pygame.K_KP1,
 		"l_kick": pygame.K_KP2,
 		"blocking": pygame.K_KP3,
-		"victory1": pygame.K_KP7,
-		"victory2": pygame.K_KP8,
+		"victory1": pygame.K_KP4,
+		"victory2": pygame.K_KP5,
 	},
 	"touche_joueur1": {
+		"pause": pygame.K_g,
 		"right": pygame.K_d,
 		"left": pygame.K_a,
 		"up": pygame.K_w,
@@ -33,8 +35,8 @@ setting = {
 		"h_punch": pygame.K_t,
 		"l_kick": pygame.K_y,
 		"blocking": pygame.K_u,
-		"victory1": pygame.K_g,
-		"victory2": pygame.K_h,
+		"victory1": pygame.K_5,
+		"victory2": pygame.K_6,
 	},
 
 	"diminution": {
