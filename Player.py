@@ -97,6 +97,8 @@ class Player:
 		self.image_perso["l_blocking_up"] = pygame.image.load("image/" + self.nom + "/" + self.nom + "_left/blocking_up.png")
 		self.image_perso["l_blocking_crouch"] = pygame.image.load("image/" + self.nom + "/" + self.nom + "_left/blocking_crouch.png")
 
+		self.logo = pygame.transform.scale(pygame.image.load("image/" + self.nom + "/" + self.nom + ".png"), (140, 180))
+
 
 	def charger_hit_box(self):
 		for key in self.image_perso.keys():

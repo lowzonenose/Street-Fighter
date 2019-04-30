@@ -34,6 +34,7 @@ class Interface:
 		self.image_map["map4"] = pygame.image.load("image/Map/Map4.png")
 		self.image_map["map5"] = pygame.image.load("image/Map/Map5.png")
 		self.image_map["map6"] = pygame.image.load("image/Map/Map6.png")
+
 		self.logo = pygame.transform.scale(pygame.image.load("image/logo.png"), (500, 200))
 
 
@@ -168,29 +169,51 @@ class Interface:
 		menu = self.font_menu.render("MENU", 1, (0,255,0))
 		self.rect_menu = menu.get_rect()
 		self.rect_menu.x = 200
-		self.rect_menu.centery = rect_ecran.centery + 100
+		self.rect_menu.centery = rect_ecran.centery + 125
 
 		quit = self.font_menu.render("QUITTER", 1, (255,0,0))
 		self.rect_quit = quit.get_rect()
 		self.rect_quit.right = rect_ecran.right - 200
-		self.rect_quit.centery = rect_ecran.centery + 100
+		self.rect_quit.centery = rect_ecran.centery + 125
 
 		pygame.draw.rect(self.ecran, (255,255,255), self.rect_menu, 2)
 		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit, 2)
 		self.ecran.blit(menu, self.rect_menu)
 		self.ecran.blit(quit, self.rect_quit)
 
+		j1 = joueur1.logo.get_rect()
+		j1.centerx = rect_ecran.width * 0.15
+		j1.y = 50
+
+		j2 = joueur2.logo.get_rect()
+		j2.centerx = rect_ecran.width * 0.85
+		j2.y = 50
+
+		self.ecran.blit(joueur1.logo, j1)
+		self.ecran.blit(joueur2.logo, j2)
+
 		if joueur1.vie > joueur2.vie :
 			win = self.font_menu.render("JOUEUR 1 WIN", 1, (0,0,255))
+			joueur_win = j1
+			
 		else :
 			win = self.font_menu.render("JOUEUR 2 WIN", 1, (255,0,0))
+			joueur_win = j2
+		
+		joueur_win.width += 10
+		joueur_win.height += 10
+		joueur_win.x -= 5
+		joueur_win.y -= 5
 
 		self.rect_win = win.get_rect()
 		self.rect_win.centerx = rect_ecran.centerx
 		self.rect_win.y = 50
 		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_win)
-		self.ecran.blit(win, self.rect_win) 
-							
+		self.ecran.blit(win, self.rect_win)
+
+		pygame.draw.rect(self.ecran, (0,255,0), joueur_win, 3) 
+
+		
 
 		
 
