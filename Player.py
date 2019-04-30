@@ -166,7 +166,6 @@ class Player:
 				self.hit_box_attaque_perso[i][j] = (x, y, w, h)
 
 
-
 	def afficher_triangle(self):
 		posX = self.rect_image.centerx 
 		posY = self.rect_image.top - 20
@@ -263,6 +262,7 @@ class Player:
 			elif self.position == "crouch":
 				self.crouch()
 
+
 	def demander_attaque(self, attaque):
 		if time.time() - self.debut_action > setting["cooldown_attaque"]:
 			self.action = attaque
@@ -293,7 +293,6 @@ class Player:
 			elif event.key == setting["touche_joueur" + str(self.num_joueur)]["l_kick"]:
 				self.demander_attaque("l_kick")
 
-
 			try:
 				if event.key == setting["touche_joueur" + str(self.num_joueur)]["victory1"]:					#VICTOIRE
 					self.victory1()
@@ -317,7 +316,6 @@ class Player:
 
 			if event.key == setting["touche_joueur" + str(self.num_joueur)]["blocking"]:
 				self.action = None
-
 
 
 	def recup_action_active(self):						#recupere les action du joueur pour choisir les bonnes attaques selon les combos de touches
@@ -352,7 +350,6 @@ class Player:
 				self.crouch_h_kick()
 
 
-		
 
 #------------------------------------------------------- ACTION DU JOUEUR ----------------------------------------------------------------------------------------------------
 	
@@ -463,14 +460,6 @@ class Player:
 		self.placer_rect()
 
 
-	def l_punch(self):
-		pass
-
-
-	def h_kick(self):
-		pass
-
-
 	def h_punch(self):
 		if self.last_direction == "right":
 			self.image_active = self.image_perso["r_h_punch"]
@@ -501,10 +490,6 @@ class Player:
 		self.placer_rect()		
 
 
-	def crouch_l_kick(self):
-		pass
-
-
 	def crouch_l_punch(self):
 		if self.last_direction == "right":
 			self.image_active = self.image_perso["r_crouch_l_punch"]
@@ -523,10 +508,6 @@ class Player:
 			self.image_active = self.image_perso["l_crouch_h_kick"]
 			self.nom_image_active = "l_crouch_h_kick"
 		self.placer_rect()
-
-
-	def crouch_h_punch(self):
-		pass
 
 
 	def victory1(self):

@@ -8,60 +8,10 @@ import Interface
 from setting import setting
 
 
-def input_player(event, name_player, num_player):
-	if event.type == pygame.KEYDOWN:
-		if event.key == setting["touche_joueur" + str(num_player)]["right"]:						#DIRECTION
-			name_player.direction = "right"
-			name_player.last_direction = "right"
-		elif event.key == setting["touche_joueur" + str(num_player)]["left"]:
-			name_player.direction = "left"
-			name_player.last_direction = "left"
-			
-		if event.key == setting["touche_joueur" + str(num_player)]["down"]:						#POSITION
-			if name_player.position not in ["jump_up", "jump_down"]:
-				name_player.position = "crouch"
-			else: 
-				name_player.position = "jump_down"
-		elif event.key == setting["touche_joueur" + str(num_player)]["up"]:
-			name_player.test_position_up()
-
-		if event.key == setting["touche_joueur" + str(num_player)]["blocking"]:					#ACTION
-			name_player.action = "blocking"
-		elif event.key == setting["touche_joueur" + str(num_player)]["h_punch"]:					
-			name_player.demander_attaque("h_punch")
-		elif event.key == setting["touche_joueur" + str(num_player)]["l_kick"]:
-			name_player.demander_attaque("l_kick")
-
-
-		try:
-			if event.key == setting["touche_joueur" + str(num_player)]["victory1"]:					#VICTOIRE
-				name_player.victory1()
-				name_player.action = "victory"
-			elif event.key == setting["touche_joueur" + str(num_player)]["victory2"]:
-				name_player.victory2()
-				name_player.action = "victory"
-		except:
-			pass
-
-	if event.type == pygame.KEYUP:
-		if event.key == setting["touche_joueur" + str(num_player)]["right"] or event.key == setting["touche_joueur" + str(num_player)]["left"]:						#cancel direction
-			name_player.direction = "idle"
-
-		if event.key == setting["touche_joueur" + str(num_player)]["victory1"] or event.key == setting["touche_joueur" + str(num_player)]["victory2"]:
-			name_player.action = None
-
-		if event.key == setting["touche_joueur" + str(num_player)]["down"]:
-			if name_player.position == "crouch":
-				name_player.position = "idle"
-
-		if event.key == setting["touche_joueur" + str(num_player)]["blocking"]:
-			name_player.action = None
-
-
 
 def main():
 	pygame.init()
-	os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 200)   #position la fenetre a un endroit precis pour l'ouverture
+	os.environ['SDL_VIDEO_WINDOW_POS'] = "{}, {}".format(100, 200)   #position la fenetre a un endroit precis pour l'ouverture
 	ecran = pygame.display.set_mode([setting["l_ecran"], int((setting["l_ecran"] * 448) / 1242)])			 #cree l'ecran
 	pygame.display.set_caption(setting["titre"])			#change le titre de la fenetre
 
@@ -78,7 +28,8 @@ def main():
 	en_jeu_1v1 = False
 	en_jeu_vsIA = False
 	menu_pause = False
-	fin_de_partie = False
+	menu_fin_partie = False
+
 	while continuer:
 		while menu_principal:
 			for event in pygame.event.get():					#recupere les evenements
@@ -104,6 +55,11 @@ def main():
 				if event.type == pygame.QUIT:
 					menu_choix_mode = False
 					continuer = False
+
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						menu_choix_mode = False
+						menu_principal = True
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1:
@@ -169,7 +125,7 @@ def main():
 			pygame.time.Clock().tick(setting["fps"])
 
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
-				fin_de_partie = True
+				menu_fin_partie = True
 				en_jeu_1v1 = False
 				en_jeu_vsIA = False
 				time.sleep(2)
@@ -189,29 +145,34 @@ def main():
 							
 						elif interface.rect_quitter.collidepoint(event.pos):
 							menu_pause = False
-							continuer = False
+							menu_principal = True
 
 			interface.menu_pause()
 			pygame.display.flip()
 
 
-		while fin_de_partie:
+		while menu_fin_partie:
 			for event in pygame.event.get():					#recupere les evenements
 				if event.type == pygame.QUIT:
-					fin_de_partie = False
+					menu_fin_partie = False
 					continuer = False
+
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						menu_fin_partie = False
+						menu_principal = True
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1: 
 						if interface.rect_menu.collidepoint(event.pos):
-							menu_principal = True
-							fin_de_partie = False
+							menu_choix_mode = True
+							menu_fin_partie = False
 							
 						elif interface.rect_quit.collidepoint(event.pos):
-							fin_de_partie = False
+							menu_fin_partie = False
 							continuer = False
 
-			interface.fin_de_partie2(joueur1, joueur2)
+			interface.fin_de_partie(joueur1, joueur2)
 			pygame.display.flip()
 
 

@@ -9,8 +9,9 @@ class Interface:
 		self.image_active = None
 		self.timer = 120
 		self.debut = time.time()
-		self.myfont = pygame.font.SysFont("monospace", 60)
-		self.font_barre_vie = pygame.font.SysFont("monospace", 40)
+		self.myfont = pygame.font.Font("image/police.ttf", 70)
+		self.font_barre_vie = pygame.font.Font("image/police.ttf", 40)
+		self.font_menu = pygame.font.Font("image/police.ttf", 100)
 		self.label = self.myfont.render(str(self.timer), 1, (0,0,0))
 		self.rect = self.label.get_rect()
 
@@ -23,7 +24,7 @@ class Interface:
 
 
 	def draw_bg(self, niveau):
-		self.ecran.blit(self.image_map["map" + str(niveau)], [setting["posX_fond"], 0])
+		self.ecran.blit(self.image_map["map" + str(niveau)], [0, 0])
 
 
 	def charger_images(self):
@@ -33,6 +34,7 @@ class Interface:
 		self.image_map["map4"] = pygame.image.load("image/Map/Map4.png")
 		self.image_map["map5"] = pygame.image.load("image/Map/Map5.png")
 		self.image_map["map6"] = pygame.image.load("image/Map/Map6.png")
+		self.logo = pygame.transform.scale(pygame.image.load("image/logo.png"), (500, 200))
 
 
 	def agrandir_taille(self):
@@ -58,44 +60,49 @@ class Interface:
 
 
 	def menu_principal(self):
-		self.ecran.fill((0,0,0))
+		self.ecran.fill((255,255,255))
 		rect_ecran = self.ecran.get_rect()
-		play = self.myfont.render("JOUER", 1, (0,255,0))
+		play = self.font_menu.render("JOUER", 1, (0,255,0))
 		self.rect_play = play.get_rect()
 		self.rect_play.x = 200
-		self.rect_play.centery = rect_ecran.centery
+		self.rect_play.centery = rect_ecran.centery + 100
 
-		quit = self.myfont.render("QUITTER", 1, (255,0,0))
+		quit = self.font_menu.render("QUITTER", 1, (255,0,0))
 		self.rect_quit = quit.get_rect()
 		self.rect_quit.right = rect_ecran.right - 200
-		self.rect_quit.centery = rect_ecran.centery
+		self.rect_quit.centery = rect_ecran.centery + 100
 
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_play, 2)
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit, 2)
+		pygame.draw.rect(self.ecran, (0,0,0), self.rect_play, 2)
+		pygame.draw.rect(self.ecran, (0,0,0), self.rect_quit, 2)
 		self.ecran.blit(play, self.rect_play)
 		self.ecran.blit(quit, self.rect_quit)
 
+		rect_logo = self.logo.get_rect()
+		rect_logo.centerx = rect_ecran.centerx
+		rect_logo.y = 50
+		self.ecran.blit(self.logo, rect_logo)
+
 
 	def menu_choix_mode(self):
-		self.ecran.fill((0,0,0))
+		self.ecran.fill((255,255,255))
 		rect_ecran = self.ecran.get_rect()
-		choix = self.myfont.render("choix mode de jeu:", 1, (255,255,255))
+		choix = self.font_menu.render("choix mode de jeu", 1, (0,0,0))
 		self.rect_choix = choix.get_rect()
 		self.rect_choix.centerx = rect_ecran.centerx
-		self.rect_choix.y = 100
+		self.rect_choix.y = 50
 
-		duo = self.myfont.render("1 vs 1", 1, (0,255,255))
+		duo = self.font_menu.render("1 vs 1", 1, (0,0,255))
 		self.rect_1v1 = duo.get_rect()
 		self.rect_1v1.x = 200
 		self.rect_1v1.centery = rect_ecran.centery + 100
 
-		solo = self.myfont.render("1 vs IA", 1, (0,255,255))
+		solo = self.font_menu.render("1 vs IA", 1, (0,0,255))
 		self.rect_1vsIA = solo.get_rect()
 		self.rect_1vsIA.right = rect_ecran.right - 200
 		self.rect_1vsIA.centery = rect_ecran.centery + 100
 
-		pygame.draw.rect(self.ecran, (255,255,0), self.rect_1v1, 2)
-		pygame.draw.rect(self.ecran, (255,255,0), self.rect_1vsIA, 2)
+		pygame.draw.rect(self.ecran, (0,0,0), self.rect_1v1, 2)
+		pygame.draw.rect(self.ecran, (0,0,0), self.rect_1vsIA, 2)
 		self.ecran.blit(choix, self.rect_choix)
 		self.ecran.blit(duo, self.rect_1v1)
 		self.ecran.blit(solo, self.rect_1vsIA)
@@ -104,19 +111,19 @@ class Interface:
 	def menu_pause(self):
 		self.ecran.fill((0,0,0,))
 		rect_ecran = self.ecran.get_rect()
-		pause = self.myfont.render("Pause", 1, (255,255,255))
+		pause = self.font_menu.render("Pause", 1, (255,255,255))
 		self.rect_pause = pause.get_rect()
 		self.rect_pause.centerx = rect_ecran.centerx
-		self.rect_pause.y = 100
+		self.rect_pause.y = 50
 
-		continuer = self.myfont.render("continuer", 1, (0,255,255))
+		continuer = self.font_menu.render("continuer", 1, (0,255,255))
 		self.rect_continuer = continuer.get_rect()
-		self.rect_continuer.x = 200
+		self.rect_continuer.x = 150
 		self.rect_continuer.centery = rect_ecran.centery + 100
 
-		quitter = self.myfont.render("quitter", 1, (0,255,255))
+		quitter = self.font_menu.render("quitter", 1, (0,255,255))
 		self.rect_quitter = quitter.get_rect()
-		self.rect_quitter.right = rect_ecran.right - 200
+		self.rect_quitter.right = rect_ecran.right - 150
 		self.rect_quitter.centery = rect_ecran.centery + 100
 
 		pygame.draw.rect(self.ecran, (255,255,0), self.rect_continuer, 2)
@@ -151,36 +158,36 @@ class Interface:
 				couleur = (255,128,0)
 			pygame.draw.rect(self.ecran, couleur, barre_vie)
 
-		self.nom_barre_vie("joueur1", (0,0,255), fond_barre_de_vie.center)
-		self.nom_barre_vie("joueur2", (255,0,0), fond_barre_de_vie2.center)
+		self.nom_barre_vie("joueur 1", (0,0,255), fond_barre_de_vie.center)
+		self.nom_barre_vie("joueur 2", (255,0,0), fond_barre_de_vie2.center)
 
 
-	def fin_de_partie2(self, joueur1, joueur2):
+	def fin_de_partie(self, joueur1, joueur2):
 		self.ecran.fill((0,0,0))
 		rect_ecran = self.ecran.get_rect()
-		menu = self.myfont.render("MENU", 1, (0,255,0))
+		menu = self.font_menu.render("MENU", 1, (0,255,0))
 		self.rect_menu = menu.get_rect()
 		self.rect_menu.x = 200
 		self.rect_menu.centery = rect_ecran.centery + 100
 
-		quit = self.myfont.render("QUITTER", 1, (0,0,0))
+		quit = self.font_menu.render("QUITTER", 1, (255,0,0))
 		self.rect_quit = quit.get_rect()
 		self.rect_quit.right = rect_ecran.right - 200
 		self.rect_quit.centery = rect_ecran.centery + 100
 
 		pygame.draw.rect(self.ecran, (255,255,255), self.rect_menu, 2)
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit)
+		pygame.draw.rect(self.ecran, (255,255,255), self.rect_quit, 2)
 		self.ecran.blit(menu, self.rect_menu)
 		self.ecran.blit(quit, self.rect_quit)
 
 		if joueur1.vie > joueur2.vie :
-			win = self.myfont.render("JOUEUR 1 WIN", 1, (0,0,255))
+			win = self.font_menu.render("JOUEUR 1 WIN", 1, (0,0,255))
 		else :
-			win = self.myfont.render("JOUEUR 2 WIN", 1, (255,0,0))
+			win = self.font_menu.render("JOUEUR 2 WIN", 1, (255,0,0))
 
 		self.rect_win = win.get_rect()
 		self.rect_win.centerx = rect_ecran.centerx
-		self.rect_win.y = 100
+		self.rect_win.y = 50
 		#pygame.draw.rect(self.ecran, (255,255,255), self.rect_win)
 		self.ecran.blit(win, self.rect_win) 
 							

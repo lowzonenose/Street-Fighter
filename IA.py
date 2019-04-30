@@ -82,7 +82,6 @@ class IA(Player.Player):
 			else:
 				self.action = None
 
-		
 
 	def update_hit_box(self, joueur):
 		super().update_hit_box(joueur)
