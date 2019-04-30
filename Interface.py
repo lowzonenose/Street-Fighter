@@ -147,8 +147,8 @@ class Interface:
 		pygame.draw.rect(self.ecran, (0,0,0), fond_barre_de_vie)
 		pygame.draw.rect(self.ecran, (0,0,0), fond_barre_de_vie2)
 
-		taille_vie = pygame.Rect(52, 22, (((rect_ecran.centerx * 0.75) * joueur1.vie)/ 1000)-4, 46)
-		taille_vie2 = pygame.Rect(rect_ecran.width - rect_ecran.centerx * 0.75 - 48, 22, (((rect_ecran.centerx * 0.75) * joueur2.vie)/ 1000)-4, 46)
+		taille_vie = pygame.Rect(52, 22, ((rect_ecran.centerx * 0.75 - 4) * joueur1.vie)/ 1000, 46)
+		taille_vie2 = pygame.Rect(rect_ecran.width - rect_ecran.centerx * 0.75 - 48, 22, ((rect_ecran.centerx * 0.75 - 4) * joueur2.vie)/ 1000, 46)
 		
 		for perso, barre_vie in [(joueur1, taille_vie), (joueur2, taille_vie2)]:
 			couleur = (0,255,0)

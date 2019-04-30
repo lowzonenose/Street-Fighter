@@ -23,14 +23,14 @@ X	IA
 	TUTORIEL ??  <==
 
 
-barre de vie: 
-	-barre de vie trop basse a 0
-	-mettre en couleur differente les degats pris => au bout de 3sec (si 0 attaque recu) -> enleve cette barre (degat quand meme pris en compte lors du changement de couleur)
-												 => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
+	barre de vie: 
+X		-barre de vie trop basse a 0
+		-mettre en couleur differente les degats pris => au bout de 3sec (si 0 attaque recu) -> enleve cette barre (degat quand meme pris en compte lors du changement de couleur)
+												 	=> si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
 
 
-position de demarrage + timer de debut de match ?
-position de fin a la place du sleep
+	position de demarrage + timer de debut de match ?
+	position de fin a la place du sleep
 
 
 
