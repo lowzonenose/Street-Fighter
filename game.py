@@ -86,6 +86,7 @@ def main():
 				joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
 				joueur2 = IA.IA(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
 				init_player = False
+			interface.transition((255,255,255))
 
 
 		while en_jeu_1v1 or en_jeu_vsIA:
@@ -119,7 +120,7 @@ def main():
 			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
 			joueur2.draw()
-			
+
 			quitter = interface.temps()
 			pygame.display.flip()
 			pygame.time.Clock().tick(setting["fps"])
@@ -128,7 +129,10 @@ def main():
 				menu_fin_partie = True
 				en_jeu_1v1 = False
 				en_jeu_vsIA = False
-				time.sleep(2)
+				if joueur1.vie > joueur2.vie:
+					interface.transition(joueur1.couleur)
+				else:
+					interface.transition(joueur2.couleur)
 
 
 		while menu_pause:
@@ -161,12 +165,14 @@ def main():
 					if event.key == pygame.K_ESCAPE:
 						menu_fin_partie = False
 						menu_principal = True
+						interface.transition((0,0,0))
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1: 
 						if interface.rect_menu.collidepoint(event.pos):
 							menu_choix_mode = True
 							menu_fin_partie = False
+							interface.transition((255,255,255))
 							
 						elif interface.rect_quit.collidepoint(event.pos):
 							menu_fin_partie = False

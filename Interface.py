@@ -213,6 +213,20 @@ class Interface:
 
 		pygame.draw.rect(self.ecran, (0,255,0), joueur_win, 3) 
 
+
+	def transition(self, couleur):
+		alpha = 0
+		while alpha <= 25:
+			fond = pygame.Surface((self.ecran.get_rect().width, self.ecran.get_rect().height))
+			fond.set_alpha(alpha)
+			fond.fill(couleur)
+			self.ecran.blit(fond, (0,0))
+			pygame.display.flip()
+			alpha += 1
+			time.sleep(0.02)
+			
+
+
 		
 
 		
