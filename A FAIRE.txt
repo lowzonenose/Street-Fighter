@@ -10,7 +10,7 @@ X	menu choix mode de jeu:
 X		1v1
 /		1vsIA (IA + en + forte)
 		IA vs IA (X)
-	menu choix perso
+X	menu choix perso
 	menu choix map (chaque personne choisi + choix aleatoire entre les deux map voté)
 /	menu fin de partie 
 X		ajouter image perso sur lecran + encadré le vainqueur

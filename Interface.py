@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 from setting import setting
 
 class Interface:
@@ -19,6 +20,7 @@ class Interface:
 		self.choix_perso_joueur = [None, None]
 		self.validation = [False, False]
 		self.choix_actif = None
+		self.init_ia = False
 
 		self.init_interface()
 
@@ -283,7 +285,7 @@ class Interface:
 			self.ecran.blit(perso, rect_perso2)
 
 
-	def boutton_selecteur(self):
+	def bouton_selecteur(self):
 		rect_ecran = self.ecran.get_rect()
 		joueur1 = self.font_barre_vie.render("Joueur 1", 1, (0,0,255))
 		self.rect_joueur1 = joueur1.get_rect()
@@ -297,11 +299,21 @@ class Interface:
 		self.rect_joueur2.y = 120
 		self.ecran.blit(joueur2, self.rect_joueur2)
 
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_joueur1, 1)
-		pygame.draw.rect(self.ecran, (255,255,255), self.rect_joueur2, 1)
+		if self.choix_actif == "joueur1":
+			couleur1 = (0,255,0)
+			couleur2 = (255,255,255)
+		elif self.choix_actif == "joueur2":
+			couleur1 = (255,255,255)
+			couleur2 = (0,255,0)
+		else:
+			couleur1 = (255,255,255)
+			couleur2 = (255,255,255)
+
+		pygame.draw.rect(self.ecran, couleur1, self.rect_joueur1, 1)
+		pygame.draw.rect(self.ecran, couleur2, self.rect_joueur2, 1)
 
 
-	def boutton_validation(self):
+	def bouton_validation(self):
 		rect_ecran = self.ecran.get_rect()
 		valider = self.font_barre_vie.render("valider", 1, (255,255,255))
 		self.rect_valider1 = valider.get_rect()
@@ -335,8 +347,9 @@ class Interface:
 			pygame.draw.rect(self.ecran, (0,255,0), self.validation_finale, 1)
 
 
-
-
+	def choix_perso_IA(self):
+		self.choix_perso_joueur[1] = random.choice(["ken", "ryu", "cammy", "t_hawk"])
+		self.validation[1] = True
 		
 
 		
