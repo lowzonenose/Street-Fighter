@@ -95,36 +95,48 @@ def main():
 							interface.choix_actif = "joueur1"
 						elif interface.rect_joueur2.collidepoint(event.pos):
 							interface.choix_actif = "joueur2"
+						elif interface.rect_valider1.collidepoint(event.pos) and interface.choix_perso_joueur[0]:
+							interface.validation[0] = True
+						elif interface.rect_valider2.collidepoint(event.pos) and interface.choix_perso_joueur[1]:
+							interface.validation[1] = True
 						if interface.choix_actif:
 							for perso in interface.rect_logo.keys():
 								if interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur1":
-									interface.choix_perso_joueur1 = perso
+									interface.choix_perso_joueur[0] = perso
+									if interface.validation[0]:
+										interface.validation[0] = False
 								elif interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur2":
-									interface.choix_perso_joueur2 = perso
+									interface.choix_perso_joueur[1] = perso
+									if interface.validation[1]:
+										interface.validation[1] = False
+
+						try:
+							if interface.validation_finale.collidepoint(event.pos):
+								selecteur_perso = False
+								en_jeu_1v1 = True
+								init_player = True	
+						except:
+							pass					
 
 			interface.selecteur_perso()
 			interface.boutton_selecteur()
 			interface.perso_selected()
-
+			interface.boutton_validation()
+			interface.check_validation()
 			pygame.display.flip()
 
 
-
-
-
-
 		if init_player:	
-			interface = Interface.Interface(ecran)
 			if en_jeu_1v1:
-				joueur1 = Player.Player(ecran, "ken", 1, setting["speed"], (0,0,255))
-				joueur2 = Player.Player(ecran, "cammy", 2, setting["speed"], (255,0,0))
+				joueur1 = Player.Player(ecran, interface.choix_perso_joueur[0], 1, setting["speed"], (0,0,255))
+				joueur2 = Player.Player(ecran, interface.choix_perso_joueur[1], 2, setting["speed"], (255,0,0))
 				init_player = False
 			elif en_jeu_vsIA:
-				joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
-				joueur2 = IA.IA(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
-				init_player = False
+				joueur1 = Player.Player(ecran, interface.choix_perso_joueur[0], 1, setting["speed"], (0,0,255))
+				joueur2 = IA.IA(ecran, interface.choix_perso_joueur[1], 2, setting["speed"], (255,0,0))
+			interface = Interface.Interface(ecran)
 			interface.transition((255,255,255))
-
+			init_player = False
 
 		while en_jeu_1v1 or en_jeu_vsIA:
 			for event in pygame.event.get():					

@@ -16,8 +16,8 @@ class Interface:
 		self.font_menu = pygame.font.Font("image/police.ttf", 100)
 		self.label = self.myfont.render(str(self.timer), 1, (0,0,0))
 		self.rect = self.label.get_rect()
-		self.choix_perso_joueur1 = None
-		self.choix_perso_joueur2 = None
+		self.choix_perso_joueur = [None, None]
+		self.validation = [False, False]
 		self.choix_actif = None
 
 		self.init_interface()
@@ -268,15 +268,15 @@ class Interface:
 
 	def perso_selected(self):
 		rect_ecran = self.ecran.get_rect()
-		if self.choix_perso_joueur1:
-			perso = pygame.transform.scale(self.logo_perso[self.choix_perso_joueur1], (160, 200))
+		if self.choix_perso_joueur[0]:
+			perso = pygame.transform.scale(self.logo_perso[self.choix_perso_joueur[0]], (160, 200))
 			rect_perso = perso.get_rect()
 			rect_perso.x = 200
 			rect_perso.y = 180
 			self.ecran.blit(perso, rect_perso)
 
-		if self.choix_perso_joueur2:
-			perso = pygame.transform.scale(self.logo_perso[self.choix_perso_joueur2], (160, 200))
+		if self.choix_perso_joueur[1]:
+			perso = pygame.transform.scale(self.logo_perso[self.choix_perso_joueur[1]], (160, 200))
 			rect_perso2 = perso.get_rect()
 			rect_perso2.right = rect_ecran.right - 200
 			rect_perso2.y = 180
@@ -299,6 +299,41 @@ class Interface:
 
 		pygame.draw.rect(self.ecran, (255,255,255), self.rect_joueur1, 1)
 		pygame.draw.rect(self.ecran, (255,255,255), self.rect_joueur2, 1)
+
+
+	def boutton_validation(self):
+		rect_ecran = self.ecran.get_rect()
+		valider = self.font_barre_vie.render("valider", 1, (255,255,255))
+		self.rect_valider1 = valider.get_rect()
+		self.rect_valider1.x = 200
+		self.rect_valider1.y = 385
+		self.ecran.blit(valider, self.rect_valider1)
+
+		self.rect_valider2 = valider.get_rect()
+		self.rect_valider2.right = rect_ecran.right - 220
+		self.rect_valider2.y = 385
+		self.ecran.blit(valider, self.rect_valider2)
+
+		if not self.validation[0]:
+			pygame.draw.rect(self.ecran, (255,255,255), self.rect_valider1, 1)
+		else:
+			pygame.draw.rect(self.ecran, (0,255,0), self.rect_valider1, 1)
+		if not self.validation[1]:	
+			pygame.draw.rect(self.ecran, (255,255,255), self.rect_valider2, 1)
+		else:
+			pygame.draw.rect(self.ecran, (0,255,0), self.rect_valider2, 1)
+
+
+	def check_validation(self):
+		if self.validation.count(True) == 2 and not self.choix_perso_joueur.count(None):
+			rect_ecran = self.ecran.get_rect()
+			valider = self.font_barre_vie.render("OK", 1, (0,255,0))
+			self.validation_finale = valider.get_rect()
+			self.validation_finale.centerx = rect_ecran.centerx
+			self.validation_finale.y = 350
+			self.ecran.blit(valider, self.validation_finale)
+			pygame.draw.rect(self.ecran, (0,255,0), self.validation_finale, 1)
+
 
 
 
