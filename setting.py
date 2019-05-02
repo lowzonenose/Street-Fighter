@@ -10,7 +10,7 @@ setting = {
 	"delai_reset_touche": 0.15,
 	"cooldown_attaque": 0.5,
 	"degat": 50,
-	"vie": 1000,
+	"vie": 10,
 
 
 	"touche_joueur2": {

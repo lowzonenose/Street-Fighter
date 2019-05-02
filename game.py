@@ -24,6 +24,7 @@ def main():
 	continuer = True
 	menu_principal = True
 	menu_choix_mode = False
+	selecteur_perso = False
 	init_player = False
 	en_jeu_1v1 = False
 	en_jeu_vsIA = False
@@ -65,8 +66,9 @@ def main():
 					if event.button == 1:
 						if interface.rect_1v1.collidepoint(event.pos):
 							menu_choix_mode = False
-							en_jeu_1v1 = True
-							init_player = True
+							selecteur_perso = True
+							#en_jeu_1v1 = True
+							#init_player = True
 						elif interface.rect_1vsIA.collidepoint(event.pos):
 							menu_choix_mode = False
 							en_jeu_vsIA = True
@@ -74,6 +76,41 @@ def main():
 
 			interface.menu_choix_mode()
 			pygame.display.flip()
+
+
+		while selecteur_perso:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					selecteur_perso = False
+					continuer = False
+
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						selecteur_perso = False
+						menu_choix_mode = True
+
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					if event.button == 1:
+						if interface.rect_joueur1.collidepoint(event.pos):
+							interface.choix_actif = "joueur1"
+						elif interface.rect_joueur2.collidepoint(event.pos):
+							interface.choix_actif = "joueur2"
+						if interface.choix_actif:
+							for perso in interface.rect_logo.keys():
+								if interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur1":
+									interface.choix_perso_joueur1 = perso
+								elif interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur2":
+									interface.choix_perso_joueur2 = perso
+
+			interface.selecteur_perso()
+			interface.boutton_selecteur()
+			interface.perso_selected()
+
+			pygame.display.flip()
+
+
+
+
 
 
 		if init_player:	
