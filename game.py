@@ -96,8 +96,10 @@ def main():
 							interface.choix_actif = "joueur2"
 						elif interface.rect_valider1.collidepoint(event.pos) and interface.choix_perso_joueur[0]:
 							interface.validation[0] = True
+							interface.choix_actif = "joueur2"
 						elif interface.rect_valider2.collidepoint(event.pos) and interface.choix_perso_joueur[1]:
 							interface.validation[1] = True
+							interface.choix_actif = "joueur1"
 						if interface.choix_actif:
 							for perso in interface.rect_logo.keys():
 								if interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur1":

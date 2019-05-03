@@ -19,7 +19,7 @@ class Interface:
 		self.rect = self.label.get_rect()
 		self.choix_perso_joueur = [None, None]
 		self.validation = [False, False]
-		self.choix_actif = None
+		self.choix_actif = "joueur1"
 		self.init_ia = False
 
 		self.init_interface()
@@ -342,7 +342,7 @@ class Interface:
 			valider = self.font_barre_vie.render("OK", 1, (0,255,0))
 			self.validation_finale = valider.get_rect()
 			self.validation_finale.centerx = rect_ecran.centerx
-			self.validation_finale.y = 350
+			self.validation_finale.y = 360
 			self.ecran.blit(valider, self.validation_finale)
 			pygame.draw.rect(self.ecran, (0,255,0), self.validation_finale, 1)
 
