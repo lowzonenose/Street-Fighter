@@ -24,9 +24,9 @@ def main():
 	continuer = True
 	menu_principal = True
 	menu_choix_mode = False
+	selecteur_perso = False
 	init_player = False
-	en_jeu_1v1 = False
-	en_jeu_vsIA = False
+	mode = False
 	menu_pause = False
 	menu_fin_partie = False
 
@@ -65,42 +65,95 @@ def main():
 					if event.button == 1:
 						if interface.rect_1v1.collidepoint(event.pos):
 							menu_choix_mode = False
-							en_jeu_1v1 = True
-							init_player = True
+							selecteur_perso = True
+							mode = "1v1"
 						elif interface.rect_1vsIA.collidepoint(event.pos):
 							menu_choix_mode = False
-							en_jeu_vsIA = True
-							init_player = True
+							selecteur_perso = True
+							mode = "1vsIA"
 
 			interface.menu_choix_mode()
 			pygame.display.flip()
 
 
+		while selecteur_perso:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					selecteur_perso = False
+					continuer = False
+					mode = False
+
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						selecteur_perso = False
+						menu_choix_mode = True
+						mode = False
+						interface = Interface.Interface(ecran)
+
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					if event.button == 1:
+						if interface.rect_joueur1.collidepoint(event.pos):
+							interface.choix_actif = "joueur1"
+						elif interface.rect_joueur2.collidepoint(event.pos):
+							interface.choix_actif = "joueur2"
+						elif interface.rect_valider1.collidepoint(event.pos) and interface.choix_perso_joueur[0]:
+							interface.validation[0] = True
+							interface.choix_actif = "joueur2"
+						elif interface.rect_valider2.collidepoint(event.pos) and interface.choix_perso_joueur[1]:
+							interface.validation[1] = True
+							interface.choix_actif = "joueur1"
+						if interface.choix_actif:
+							for perso in interface.rect_logo.keys():
+								if interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur1":
+									interface.choix_perso_joueur[0] = perso
+									if interface.validation[0]:
+										interface.validation[0] = False
+								elif interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur2":
+									interface.choix_perso_joueur[1] = perso
+									if interface.validation[1]:
+										interface.validation[1] = False
+
+						try:
+							if interface.validation_finale.collidepoint(event.pos):
+								selecteur_perso = False
+								init_player = True	
+						except:
+							pass					
+
+			interface.selecteur_perso()
+			interface.bouton_selecteur()
+			interface.perso_selected()
+			interface.bouton_validation()
+			interface.check_validation()
+
+			if not interface.init_ia and mode == "1vsIA":
+				interface.choix_perso_IA()
+				interface.init_ia = True
+			pygame.display.flip()
+
+
 		if init_player:	
+			if mode == "1v1":
+				joueur1 = Player.Player(ecran, interface.choix_perso_joueur[0], 1, setting["speed"], (0,0,255))
+				joueur2 = Player.Player(ecran, interface.choix_perso_joueur[1], 2, setting["speed"], (255,0,0))
+				init_player = False
+			elif mode == "1vsIA":
+				joueur1 = Player.Player(ecran, interface.choix_perso_joueur[0], 1, setting["speed"], (0,0,255))
+				joueur2 = IA.IA(ecran, interface.choix_perso_joueur[1], 2, setting["speed"], (255,0,0))
 			interface = Interface.Interface(ecran)
-			if en_jeu_1v1:
-				joueur1 = Player.Player(ecran, "ken", 1, setting["speed"], (0,0,255))
-				joueur2 = Player.Player(ecran, "cammy", 2, setting["speed"], (255,0,0))
-				init_player = False
-			elif en_jeu_vsIA:
-				joueur1 = Player.Player(ecran, "ryu", 1, setting["speed"], (0,0,255))
-				joueur2 = IA.IA(ecran, "t_hawk", 2, setting["speed"], (255,0,0))
-				init_player = False
 			interface.transition((255,255,255))
+			init_player = False
 
-
-		while en_jeu_1v1 or en_jeu_vsIA:
+		while mode:
 			for event in pygame.event.get():					
 				if event.type == pygame.QUIT:
 					continuer = False
-					en_jeu_1v1 = False
-					en_jeu_vsIA = False
+					mode = False
 
 				elif event.type == pygame.KEYDOWN:
 					if event.key in [setting["touche_joueur1"]["pause"], setting["touche_joueur2"]["pause"]]:
 						menu_pause = True
-						en_jeu_1v1 = False
-						en_jeu_vsIA = False
+						mode = False
 
 				joueur1.input_player(event)
 				joueur2.input_player(event)
@@ -127,8 +180,7 @@ def main():
 
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				menu_fin_partie = True
-				en_jeu_1v1 = False
-				en_jeu_vsIA = False
+				mode = False
 				if joueur1.vie > joueur2.vie:
 					interface.transition(joueur1.couleur)
 				else:
@@ -144,7 +196,7 @@ def main():
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1:
 						if interface.rect_continuer.collidepoint(event.pos):
-							en_jeu_1v1 = True
+							mode = True
 							menu_pause = False
 							
 						elif interface.rect_quitter.collidepoint(event.pos):

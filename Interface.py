@@ -1,11 +1,14 @@
 import pygame
 import time
+import random
 from setting import setting
 
 class Interface:
 	def __init__(self, ecran):
 		self.ecran = ecran
 		self.image_map = {}
+		self.logo_perso = {}
+		self.rect_logo = {}
 		self.image_active = None
 		self.timer = 120
 		self.debut = time.time()
@@ -14,6 +17,10 @@ class Interface:
 		self.font_menu = pygame.font.Font("image/police.ttf", 100)
 		self.label = self.myfont.render(str(self.timer), 1, (0,0,0))
 		self.rect = self.label.get_rect()
+		self.choix_perso_joueur = [None, None]
+		self.validation = [False, False]
+		self.choix_actif = "joueur1"
+		self.init_ia = False
 
 		self.init_interface()
 
@@ -28,6 +35,8 @@ class Interface:
 
 
 	def charger_images(self):
+		self.logo = pygame.transform.scale(pygame.image.load("image/logo.png"), (500, 200))
+
 		self.image_map["map1"] = pygame.image.load("image/Map/Map1.png")
 		self.image_map["map2"] = pygame.image.load("image/Map/Map2.png")
 		self.image_map["map3"] = pygame.image.load("image/Map/Map3.png")
@@ -35,7 +44,10 @@ class Interface:
 		self.image_map["map5"] = pygame.image.load("image/Map/Map5.png")
 		self.image_map["map6"] = pygame.image.load("image/Map/Map6.png")
 
-		self.logo = pygame.transform.scale(pygame.image.load("image/logo.png"), (500, 200))
+		self.logo_perso["ken"] = pygame.transform.scale(pygame.image.load("image/ken/ken.png"), (50, 70))
+		self.logo_perso["ryu"] = pygame.transform.scale(pygame.image.load("image/ryu/ryu.png"), (50, 70))
+		self.logo_perso["cammy"] = pygame.transform.scale(pygame.image.load("image/cammy/cammy.png"), (50, 70))
+		self.logo_perso["t_hawk"] = pygame.transform.scale(pygame.image.load("image/t_hawk/t_hawk.png"), (50, 70))
 
 
 	def agrandir_taille(self):
@@ -135,7 +147,7 @@ class Interface:
 
 
 	def nom_barre_vie(self, joueur, couleur, position):
-		nom = self.font_barre_vie.render(joueur, 1, couleur)
+		nom = self.font_barre_vie.render(joueur.nom, 1, couleur)
 		rect_nom = nom.get_rect()
 		rect_nom.center = position
 		self.ecran.blit(nom, rect_nom)
@@ -159,8 +171,8 @@ class Interface:
 				couleur = (255,128,0)
 			pygame.draw.rect(self.ecran, couleur, barre_vie)
 
-		self.nom_barre_vie("joueur 1", (0,0,255), fond_barre_de_vie.center)
-		self.nom_barre_vie("joueur 2", (255,0,0), fond_barre_de_vie2.center)
+		self.nom_barre_vie(joueur1, (0,0,255), fond_barre_de_vie.center)
+		self.nom_barre_vie(joueur2, (255,0,0), fond_barre_de_vie2.center)
 
 
 	def fin_de_partie(self, joueur1, joueur2):
@@ -193,11 +205,11 @@ class Interface:
 		self.ecran.blit(joueur2.logo, j2)
 
 		if joueur1.vie > joueur2.vie :
-			win = self.font_menu.render("JOUEUR 1 WIN", 1, (0,0,255))
+			win = self.font_menu.render(joueur1.nom + " WIN !", 1, (0,0,255))
 			joueur_win = j1
 			
 		else :
-			win = self.font_menu.render("JOUEUR 2 WIN", 1, (255,0,0))
+			win = self.font_menu.render(joueur2.nom + " WIN !", 1, (255,0,0))
 			joueur_win = j2
 		
 		joueur_win.width += 10
@@ -226,7 +238,118 @@ class Interface:
 			time.sleep(0.02)
 			
 
+	def selecteur_perso(self):
+		self.ecran.fill((0,0,0))
+		rect_ecran = self.ecran.get_rect()
+		selecteur = self.myfont.render("Selecteur de personnage", 1, (255,255,255))
+		self.rect_selecteur = selecteur.get_rect()
+		self.rect_selecteur.centerx = rect_ecran.centerx
+		self.rect_selecteur.y = 25
 
+		ken = ("ken", rect_ecran.centerx - self.logo_perso["ken"].get_rect().width, rect_ecran.bottom - 100)
+		ryu = ("ryu", rect_ecran.centerx + self.logo_perso["ryu"].get_rect().width, rect_ecran.bottom - 100)
+		cammy = ("cammy", rect_ecran.centerx - self.logo_perso["cammy"].get_rect().width, rect_ecran.bottom - 200)
+		t_hawk = ("t_hawk", rect_ecran.centerx + self.logo_perso["t_hawk"].get_rect().width, rect_ecran.bottom - 200)
+
+		for nom, pos_centerx, pos_bottom in [ken, ryu, cammy, t_hawk]:
+			self.rect_logo[nom] = self.logo_perso[nom].get_rect()
+			self.rect_logo[nom].centerx = pos_centerx
+			self.rect_logo[nom].bottom = pos_bottom
+			
+			self.bordure = self.logo_perso[nom].get_rect()
+			self.bordure.width += 10
+			self.bordure.height += 10
+			self.bordure.x = self.rect_logo[nom].x - 5
+			self.bordure.y = self.rect_logo[nom].y - 5
+
+			self.ecran.blit(self.logo_perso[nom], self.rect_logo[nom])
+			pygame.draw.rect(self.ecran, (255,255,255), self.bordure, 5)
+
+		self.ecran.blit(selecteur, self.rect_selecteur)
+
+
+	def perso_selected(self):
+		rect_ecran = self.ecran.get_rect()
+		if self.choix_perso_joueur[0]:
+			perso = pygame.transform.scale(self.logo_perso[self.choix_perso_joueur[0]], (160, 200))
+			rect_perso = perso.get_rect()
+			rect_perso.x = 200
+			rect_perso.y = 180
+			self.ecran.blit(perso, rect_perso)
+
+		if self.choix_perso_joueur[1]:
+			perso = pygame.transform.scale(self.logo_perso[self.choix_perso_joueur[1]], (160, 200))
+			rect_perso2 = perso.get_rect()
+			rect_perso2.right = rect_ecran.right - 200
+			rect_perso2.y = 180
+			self.ecran.blit(perso, rect_perso2)
+
+
+	def bouton_selecteur(self):
+		rect_ecran = self.ecran.get_rect()
+		joueur1 = self.font_barre_vie.render("Joueur 1", 1, (0,0,255))
+		self.rect_joueur1 = joueur1.get_rect()
+		self.rect_joueur1.x = 200
+		self.rect_joueur1.y = 120
+		self.ecran.blit(joueur1, self.rect_joueur1)
+
+		joueur2 = self.font_barre_vie.render("Joueur 2", 1, (255,0,0))
+		self.rect_joueur2 = joueur2.get_rect()
+		self.rect_joueur2.right = rect_ecran.right - 220
+		self.rect_joueur2.y = 120
+		self.ecran.blit(joueur2, self.rect_joueur2)
+
+		if self.choix_actif == "joueur1":
+			couleur1 = (0,255,0)
+			couleur2 = (255,255,255)
+		elif self.choix_actif == "joueur2":
+			couleur1 = (255,255,255)
+			couleur2 = (0,255,0)
+		else:
+			couleur1 = (255,255,255)
+			couleur2 = (255,255,255)
+
+		pygame.draw.rect(self.ecran, couleur1, self.rect_joueur1, 1)
+		pygame.draw.rect(self.ecran, couleur2, self.rect_joueur2, 1)
+
+
+	def bouton_validation(self):
+		rect_ecran = self.ecran.get_rect()
+		valider = self.font_barre_vie.render("valider", 1, (255,255,255))
+		self.rect_valider1 = valider.get_rect()
+		self.rect_valider1.x = 200
+		self.rect_valider1.y = 385
+		self.ecran.blit(valider, self.rect_valider1)
+
+		self.rect_valider2 = valider.get_rect()
+		self.rect_valider2.right = rect_ecran.right - 220
+		self.rect_valider2.y = 385
+		self.ecran.blit(valider, self.rect_valider2)
+
+		if not self.validation[0]:
+			pygame.draw.rect(self.ecran, (255,255,255), self.rect_valider1, 1)
+		else:
+			pygame.draw.rect(self.ecran, (0,255,0), self.rect_valider1, 1)
+		if not self.validation[1]:	
+			pygame.draw.rect(self.ecran, (255,255,255), self.rect_valider2, 1)
+		else:
+			pygame.draw.rect(self.ecran, (0,255,0), self.rect_valider2, 1)
+
+
+	def check_validation(self):
+		if self.validation.count(True) == 2 and not self.choix_perso_joueur.count(None):
+			rect_ecran = self.ecran.get_rect()
+			valider = self.font_barre_vie.render("OK", 1, (0,255,0))
+			self.validation_finale = valider.get_rect()
+			self.validation_finale.centerx = rect_ecran.centerx
+			self.validation_finale.y = 360
+			self.ecran.blit(valider, self.validation_finale)
+			pygame.draw.rect(self.ecran, (0,255,0), self.validation_finale, 1)
+
+
+	def choix_perso_IA(self):
+		self.choix_perso_joueur[1] = random.choice(["ken", "ryu", "cammy", "t_hawk"])
+		self.validation[1] = True
 		
 
 		
