@@ -87,6 +87,8 @@ def main():
 					if event.key == pygame.K_ESCAPE:
 						selecteur_perso = False
 						menu_choix_mode = True
+						mode = False
+						interface = Interface.Interface(ecran)
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1:
