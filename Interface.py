@@ -317,7 +317,7 @@ class Interface:
 		rect_ecran = self.ecran.get_rect()
 		valider = self.font_barre_vie.render("valider", 1, (255,255,255))
 		self.rect_valider1 = valider.get_rect()
-		self.rect_valider1.x = 200
+		self.rect_valider1.x = 210
 		self.rect_valider1.y = 385
 		self.ecran.blit(valider, self.rect_valider1)
 
