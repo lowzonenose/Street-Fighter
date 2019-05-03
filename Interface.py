@@ -35,19 +35,19 @@ class Interface:
 
 
 	def charger_images(self):
-		self.logo = pygame.transform.scale(pygame.image.load("image/logo.png"), (500, 200))
+		self.logo = pygame.transform.scale(pygame.image.load("image/logo.png").convert_alpha(), (500, 200))
 
-		self.image_map["map1"] = pygame.image.load("image/Map/Map1.png")
-		self.image_map["map2"] = pygame.image.load("image/Map/Map2.png")
-		self.image_map["map3"] = pygame.image.load("image/Map/Map3.png")
-		self.image_map["map4"] = pygame.image.load("image/Map/Map4.png")
-		self.image_map["map5"] = pygame.image.load("image/Map/Map5.png")
-		self.image_map["map6"] = pygame.image.load("image/Map/Map6.png")
+		self.image_map["map1"] = pygame.image.load("image/Map/Map1.png").convert_alpha()
+		self.image_map["map2"] = pygame.image.load("image/Map/Map2.png").convert_alpha()
+		self.image_map["map3"] = pygame.image.load("image/Map/Map3.png").convert_alpha()
+		self.image_map["map4"] = pygame.image.load("image/Map/Map4.png").convert_alpha()
+		self.image_map["map5"] = pygame.image.load("image/Map/Map5.png").convert_alpha()
+		self.image_map["map6"] = pygame.image.load("image/Map/Map6.png").convert_alpha()
 
-		self.logo_perso["ken"] = pygame.transform.scale(pygame.image.load("image/ken/ken.png"), (50, 70))
-		self.logo_perso["ryu"] = pygame.transform.scale(pygame.image.load("image/ryu/ryu.png"), (50, 70))
-		self.logo_perso["cammy"] = pygame.transform.scale(pygame.image.load("image/cammy/cammy.png"), (50, 70))
-		self.logo_perso["t_hawk"] = pygame.transform.scale(pygame.image.load("image/t_hawk/t_hawk.png"), (50, 70))
+		self.logo_perso["ken"] = pygame.transform.scale(pygame.image.load("image/ken/ken.png").convert_alpha(), (50, 70))
+		self.logo_perso["ryu"] = pygame.transform.scale(pygame.image.load("image/ryu/ryu.png").convert_alpha(), (50, 70))
+		self.logo_perso["cammy"] = pygame.transform.scale(pygame.image.load("image/cammy/cammy.png").convert_alpha(), (50, 70))
+		self.logo_perso["t_hawk"] = pygame.transform.scale(pygame.image.load("image/t_hawk/t_hawk.png").convert_alpha(), (50, 70))
 
 
 	def agrandir_taille(self):
