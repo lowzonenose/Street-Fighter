@@ -29,8 +29,8 @@ X		-barre de vie trop basse a 0
 													  => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
 
 
-	position de demarrage + timer de debut de match ?
-	position de fin a la place du sleep
+X	position de demarrage + timer de debut de match ?
+X	position de fin a la place du sleep
 
 
 

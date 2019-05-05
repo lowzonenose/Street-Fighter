@@ -58,10 +58,11 @@ class Interface:
 
 	def temps(self):
 		if time.time() - self.debut > 1:
-			self.timer -= 1
 			self.debut = time.time()
+			self.timer -= 1
 			self.label = self.myfont.render(str(self.timer), 1, (0,0,0))
 			self.rect = self.label.get_rect()
+		
 		if self.timer < 0:
 			return True
 
@@ -350,13 +351,47 @@ class Interface:
 	def choix_perso_IA(self):
 		self.choix_perso_joueur[1] = random.choice(["ken", "ryu", "cammy", "t_hawk"])
 		self.validation[1] = True
-		
-
-		
-
-		
-
-		
 
 
+	def timer_debut_partie(self, joueur1, joueur2):
+		temps = 3
+		while temps >= 0:
+			if time.time() - self.debut > 1:
+				self.debut = time.time()
+				t_temps = self.font_menu.render(str(temps), 1, (0,0,0))
+				r_temps = t_temps.get_rect()
+				r_temps.center = self.ecran.get_rect().center
+				temps -= 1
 
+				self.draw_bg(1)
+				self.barre_de_vie(joueur1, joueur2)
+				joueur1.victory2()
+				joueur2.victory2()
+				joueur1.draw()
+				joueur2.draw()
+				self.ecran.blit(t_temps, r_temps)
+				pygame.display.flip()
+
+
+	def afficher_fin_de_partie(self, joueur1, joueur2):
+		temps = 5
+		debut = time.time()
+		while temps >= 0:
+			if time.time() - debut > 0.5:
+				debut = time.time()
+				temps -= 1
+				t_fin = self.font_menu.render("partie termine", 1, (0,255,0))
+				r_fin = t_fin.get_rect()
+				r_fin.center = self.ecran.get_rect().center
+				r_fin.y -= 50
+
+				self.draw_bg(1)
+				self.barre_de_vie(joueur1, joueur2)
+				if joueur1.vie > joueur2.vie:
+					joueur1.victory1()
+				else:
+					joueur2.victory1()
+				joueur1.draw()
+				joueur2.draw()
+				self.ecran.blit(t_fin, r_fin)
+				pygame.display.flip()

@@ -44,6 +44,4 @@ setting = {
 		"cammy": 1,
 		"t_hawk": 1.3,
 	}
-
-
 }

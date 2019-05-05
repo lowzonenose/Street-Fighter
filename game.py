@@ -11,7 +11,7 @@ from setting import setting
 
 def main():
 	pygame.init()
-	os.environ['SDL_VIDEO_WINDOW_POS'] = "{}, {}".format(100, 200)   #position la fenetre a un endroit precis pour l'ouverture
+	os.environ['SDL_VIDEO_WINDOW_POS'] = "{}, {}".format(50, 200)   #position la fenetre a un endroit precis pour l'ouverture
 	ecran = pygame.display.set_mode([setting["l_ecran"], int((setting["l_ecran"] * 448) / 1242)])			 #cree l'ecran
 	pygame.display.set_caption(setting["titre"])			#change le titre de la fenetre
 
@@ -39,12 +39,15 @@ def main():
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1: 
-						if interface.rect_play.collidepoint(event.pos):
-							menu_principal = False
-							menu_choix_mode = True
-						elif interface.rect_quit.collidepoint(event.pos):
-							menu_principal = False
-							continuer = False
+						try:	
+							if interface.rect_play.collidepoint(event.pos):
+								menu_principal = False
+								menu_choix_mode = True
+							elif interface.rect_quit.collidepoint(event.pos):
+								menu_principal = False
+								continuer = False
+						except Exception as e:
+							print(e)
 
 			interface.menu_principal()
 			pygame.display.flip()
@@ -118,7 +121,7 @@ def main():
 								selecteur_perso = False
 								init_player = True	
 						except:
-							pass					
+							pass				
 
 			interface.selecteur_perso()
 			interface.bouton_selecteur()
@@ -143,6 +146,8 @@ def main():
 			interface = Interface.Interface(ecran)
 			interface.transition((255,255,255))
 			init_player = False
+			interface.timer_debut_partie(joueur1, joueur2)
+			pygame.event.clear()
 
 		while mode:
 			for event in pygame.event.get():					
@@ -173,7 +178,6 @@ def main():
 			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
 			joueur2.draw()
-
 			quitter = interface.temps()
 			pygame.display.flip()
 			pygame.time.Clock().tick(setting["fps"])
@@ -181,6 +185,7 @@ def main():
 			if joueur1.vie <= 0 or joueur2.vie <= 0 or quitter:
 				menu_fin_partie = True
 				mode = False
+				interface.afficher_fin_de_partie(joueur1, joueur2)
 				if joueur1.vie > joueur2.vie:
 					interface.transition(joueur1.couleur)
 				else:
