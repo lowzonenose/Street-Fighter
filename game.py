@@ -174,7 +174,7 @@ def main():
 			#joueur1.afficher()
 			#joueur2.afficher()
 
-			interface.draw_bg(1)
+			interface.draw_bg()
 			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
 			joueur2.draw()

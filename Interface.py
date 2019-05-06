@@ -10,6 +10,7 @@ class Interface:
 		self.logo_perso = {}
 		self.rect_logo = {}
 		self.image_active = None
+		self.num_map = 1
 		self.timer = 120
 		self.debut = time.time()
 		self.myfont = pygame.font.Font("image/police.ttf", 70)
@@ -30,8 +31,8 @@ class Interface:
 		self.agrandir_taille()
 
 
-	def draw_bg(self, niveau):
-		self.ecran.blit(self.image_map["map" + str(niveau)], [0, 0])
+	def draw_bg(self):
+		self.ecran.blit(self.image_map["map" + str(self.num_map)], [0, 0])
 
 
 	def charger_images(self):
@@ -229,7 +230,7 @@ class Interface:
 
 	def transition(self, couleur):
 		alpha = 0
-		while alpha <= 25:
+		while alpha <= 50:
 			fond = pygame.Surface((self.ecran.get_rect().width, self.ecran.get_rect().height))
 			fond.set_alpha(alpha)
 			fond.fill(couleur)
@@ -363,7 +364,7 @@ class Interface:
 				r_temps.center = self.ecran.get_rect().center
 				temps -= 1
 
-				self.draw_bg(1)
+				self.draw_bg()
 				self.barre_de_vie(joueur1, joueur2)
 				joueur1.victory2()
 				joueur2.victory2()
@@ -380,12 +381,12 @@ class Interface:
 			if time.time() - debut > 0.5:
 				debut = time.time()
 				temps -= 1
-				t_fin = self.font_menu.render("partie termine", 1, (0,255,0))
+				t_fin = self.font_menu.render("partie termine", 1, (255,0,128))
 				r_fin = t_fin.get_rect()
 				r_fin.center = self.ecran.get_rect().center
 				r_fin.y -= 50
 
-				self.draw_bg(1)
+				self.draw_bg()
 				self.barre_de_vie(joueur1, joueur2)
 				if joueur1.vie > joueur2.vie:
 					joueur1.victory1()

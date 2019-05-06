@@ -13,12 +13,12 @@ class IA(Player.Player):
 	def input_player(self, event):  
 		if time.time() - self.temporisation_mouvement > 0.2:
 			aleatoire = random.randrange(111)
-			if aleatoire <= 60:
+			if aleatoire <= 40:
 				self.direction = "idle"
-			elif aleatoire > 60 and aleatoire <= 80:
+			elif aleatoire > 40 and aleatoire <= 70:
 				self.direction = "left"
 				self.last_direction = "left"
-			elif aleatoire > 80 and aleatoire <= 100:
+			elif aleatoire > 70 and aleatoire <= 100:
 				self.direction = "right"
 				self.last_direction = "right"
 			if aleatoire > 100 and aleatoire <= 110:
@@ -76,9 +76,9 @@ class IA(Player.Player):
 								self.position = "crouch"
 								self.action = "blocking"
 			elif self.tester_degat(joueur):
-				if random.randrange(100) < 50:
-					self.action = list(self.ordre_attaque_hit_box.keys())[list(self.ordre_attaque_hit_box.values()).index(self.attaque_touche)][2:]
-					self.demander_attaque(self.action)
+				#if random.randrange(100) < 75:
+				self.action = list(self.ordre_attaque_hit_box.keys())[list(self.ordre_attaque_hit_box.values()).index(self.attaque_touche)][2:]
+				self.demander_attaque(self.action)
 			else:
 				self.action = None
 
