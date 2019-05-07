@@ -66,14 +66,17 @@ def main():
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1:
-						if interface.rect_1v1.collidepoint(event.pos):
-							menu_choix_mode = False
-							selecteur_perso = True
-							mode = "1v1"
-						elif interface.rect_1vsIA.collidepoint(event.pos):
-							menu_choix_mode = False
-							selecteur_perso = True
-							mode = "1vsIA"
+						try:
+							if interface.rect_1v1.collidepoint(event.pos):
+								menu_choix_mode = False
+								selecteur_perso = True
+								mode = "1v1"
+							elif interface.rect_1vsIA.collidepoint(event.pos):
+								menu_choix_mode = False
+								selecteur_perso = True
+								mode = "1vsIA"
+						except Exception as e:
+							print(e)
 
 			interface.menu_choix_mode()
 			pygame.display.flip()
@@ -95,27 +98,29 @@ def main():
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1:
-						if interface.rect_joueur1.collidepoint(event.pos):
-							interface.choix_actif = "joueur1"
-						elif interface.rect_joueur2.collidepoint(event.pos):
-							interface.choix_actif = "joueur2"
-						elif interface.rect_valider1.collidepoint(event.pos) and interface.choix_perso_joueur[0]:
-							interface.validation[0] = True
-							interface.choix_actif = "joueur2"
-						elif interface.rect_valider2.collidepoint(event.pos) and interface.choix_perso_joueur[1]:
-							interface.validation[1] = True
-							interface.choix_actif = "joueur1"
-						if interface.choix_actif:
-							for perso in interface.rect_logo.keys():
-								if interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur1":
-									interface.choix_perso_joueur[0] = perso
-									if interface.validation[0]:
-										interface.validation[0] = False
-								elif interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur2":
-									interface.choix_perso_joueur[1] = perso
-									if interface.validation[1]:
-										interface.validation[1] = False
-
+						try:
+							if interface.rect_joueur1.collidepoint(event.pos):
+								interface.choix_actif = "joueur1"
+							elif interface.rect_joueur2.collidepoint(event.pos):
+								interface.choix_actif = "joueur2"
+							elif interface.rect_valider1.collidepoint(event.pos) and interface.choix_perso_joueur[0]:
+								interface.validation[0] = True
+								interface.choix_actif = "joueur2"
+							elif interface.rect_valider2.collidepoint(event.pos) and interface.choix_perso_joueur[1]:
+								interface.validation[1] = True
+								interface.choix_actif = "joueur1"
+							if interface.choix_actif:
+								for perso in interface.rect_logo.keys():
+									if interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur1":
+										interface.choix_perso_joueur[0] = perso
+										if interface.validation[0]:
+											interface.validation[0] = False
+									elif interface.rect_logo[perso].collidepoint(event.pos) and interface.choix_actif == "joueur2":
+										interface.choix_perso_joueur[1] = perso
+										if interface.validation[1]:
+											interface.validation[1] = False
+						except Exception as e:
+							
 						try:
 							if interface.validation_finale.collidepoint(event.pos):
 								selecteur_perso = False
@@ -170,6 +175,8 @@ def main():
 			joueur2.update_hit_box(joueur1)
 			joueur1.gerer_degat(joueur2)
 			joueur2.gerer_degat(joueur1)
+			joueur1.reset_combo()
+			joueur2.reset_combo()
 
 			#joueur1.afficher()
 			#joueur2.afficher()
@@ -178,6 +185,8 @@ def main():
 			interface.barre_de_vie(joueur1, joueur2)
 			joueur1.draw()
 			joueur2.draw()
+			interface.afficher_combo(joueur1, 50, 75)
+			interface.afficher_combo(joueur2, 900, 75)
 			quitter = interface.temps()
 			pygame.display.flip()
 			pygame.time.Clock().tick(setting["fps"])
@@ -226,14 +235,17 @@ def main():
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
 					if event.button == 1: 
-						if interface.rect_menu.collidepoint(event.pos):
-							menu_choix_mode = True
-							menu_fin_partie = False
-							interface.transition((255,255,255))
+						try:
+							if interface.rect_menu.collidepoint(event.pos):
+								menu_choix_mode = True
+								menu_fin_partie = False
+								interface.transition((255,255,255))
 							
-						elif interface.rect_quit.collidepoint(event.pos):
-							menu_fin_partie = False
-							continuer = False
+							elif interface.rect_quit.collidepoint(event.pos):
+								menu_fin_partie = False
+								continuer = False
+						except Exception as e: 
+							print(e)
 
 			interface.fin_de_partie(joueur1, joueur2)
 			pygame.display.flip()

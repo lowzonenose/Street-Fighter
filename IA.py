@@ -76,7 +76,7 @@ class IA(Player.Player):
 								self.position = "crouch"
 								self.action = "blocking"
 			elif self.tester_degat(joueur):
-				#if random.randrange(100) < 75:
+				#if random.randbrange(100) < 75:
 				self.action = list(self.ordre_attaque_hit_box.keys())[list(self.ordre_attaque_hit_box.values()).index(self.attaque_touche)][2:]
 				self.demander_attaque(self.action)
 			else:

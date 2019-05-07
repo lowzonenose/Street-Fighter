@@ -171,7 +171,8 @@ class Interface:
 				couleur = (255,0,0)
 			elif perso.vie <= setting["vie"] * 0.4:
 				couleur = (255,128,0)
-			pygame.draw.rect(self.ecran, couleur, barre_vie)
+			if perso.vie != 0:
+				pygame.draw.rect(self.ecran, couleur, barre_vie)
 
 		self.nom_barre_vie(joueur1, (0,0,255), fond_barre_de_vie.center)
 		self.nom_barre_vie(joueur2, (255,0,0), fond_barre_de_vie2.center)
@@ -396,3 +397,15 @@ class Interface:
 				joueur2.draw()
 				self.ecran.blit(t_fin, r_fin)
 				pygame.display.flip()
+
+
+	def afficher_combo(self, joueur, posx, posy):
+		if joueur.combo > 2:
+			rect_ecran = self.ecran.get_rect()
+			combo = self.myfont.render("combo: " + str(joueur.combo), 1, (0,0,0))
+			self.rect_combo = combo.get_rect()
+			self.rect_combo.x = posx
+			self.rect_combo.y = posy
+
+			self.ecran.blit(combo, self.rect_combo)
+
