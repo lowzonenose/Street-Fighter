@@ -120,7 +120,7 @@ def main():
 										if interface.validation[1]:
 											interface.validation[1] = False
 						except Exception as e:
-							
+							pass
 						try:
 							if interface.validation_finale.collidepoint(event.pos):
 								selecteur_perso = False
