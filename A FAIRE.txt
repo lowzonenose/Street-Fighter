@@ -25,7 +25,7 @@ X	IA
 
 	barre de vie: 
 X		-barre de vie trop basse a 0
-		 => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
+X		 => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
 
 
 X	position de demarrage + timer de debut de match ?

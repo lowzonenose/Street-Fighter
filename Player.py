@@ -30,6 +30,7 @@ class Player:
 		self.ordre_attaque_hit_box = {}
 		self.attaque_hit_box = None
 		self.vie = setting["vie"]
+		self.degat = setting["degat"]
 		self.toucher = False
 		self.premiere_attaque = True
 		self.combo = 0
@@ -233,11 +234,13 @@ class Player:
 							self.premiere_attaque = False
 
 				if ennemi.toucher:
-					ennemi.vie -= setting["degat"]
+					ennemi.vie -= self.degat
 					if ennemi.vie < 0:
 						ennemi.vie = 0
 					ennemi.toucher = False
 					self.combo += 1
+					if self.combo >= 3:
+						self.degat += 5
 					self.debut_combo = time.time()
 
 
@@ -278,6 +281,7 @@ class Player:
 	def reset_combo(self):
 		if time.time() - self.debut_combo > 1:
 			self.combo = 0
+			self.degat = setting["degat"]
 
 
 	def input_player(self, event):
