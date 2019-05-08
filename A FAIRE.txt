@@ -25,8 +25,7 @@ X	IA
 
 	barre de vie: 
 X		-barre de vie trop basse a 0
-		-mettre en couleur differente les degats pris => au bout de 3sec (si 0 attaque recu) -> enleve cette barre (degat quand meme pris en compte lors du changement de couleur)
-													  => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
+X		 => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
 
 
 X	position de demarrage + timer de debut de match ?

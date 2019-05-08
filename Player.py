@@ -30,8 +30,11 @@ class Player:
 		self.ordre_attaque_hit_box = {}
 		self.attaque_hit_box = None
 		self.vie = setting["vie"]
+		self.degat = setting["degat"]
 		self.toucher = False
 		self.premiere_attaque = True
+		self.combo = 0
+		self.debut_combo = 0
 		
 		self.init_perso()
 
@@ -64,8 +67,8 @@ class Player:
 		try:							
 			self.image_perso["victory1"] = pygame.image.load("image/" + self.nom + "/" + self.nom + "_right/victory1.png").convert_alpha()
 			self.image_perso["victory2"] = pygame.image.load("image/" + self.nom + "/" + self.nom + "_right/victory2.png").convert_alpha()
-		except:
-			pass
+		except Exception as e:
+			print(e)
 
 		self.image_perso["r_idle"] = pygame.image.load("image/" + self.nom + "/" + self.nom + "_right/idle.png").convert_alpha()
 		self.image_perso["r_walking_left"] = pygame.image.load("image/" + self.nom + "/" + self.nom + "_right/walking_left.png").convert_alpha()
@@ -231,10 +234,14 @@ class Player:
 							self.premiere_attaque = False
 
 				if ennemi.toucher:
-					ennemi.vie -= setting["degat"]
+					ennemi.vie -= self.degat
 					if ennemi.vie < 0:
 						ennemi.vie = 0
 					ennemi.toucher = False
+					self.combo += 1
+					if self.combo >= 3:
+						self.degat += 5
+					self.debut_combo = time.time()
 
 
 	def placer_rect(self):								#recup taille image + placer l'image sur posX et posY
@@ -269,6 +276,12 @@ class Player:
 		if time.time() - self.debut_action > setting["cooldown_attaque"]:
 			self.action = attaque
 			self.debut_action = time.time()
+
+
+	def reset_combo(self):
+		if time.time() - self.debut_combo > 1:
+			self.combo = 0
+			self.degat = setting["degat"]
 
 
 	def input_player(self, event):
