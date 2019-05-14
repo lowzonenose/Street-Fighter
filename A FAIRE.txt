@@ -1,25 +1,41 @@
-/	hit_box
-	ajouter image bloquage
-	cooldown des attaques
-	empecher de sortir de lecran
+X	hit_box
+X	refaire hit_box d'attaques
+X	cooldown des attaques
+X	empecher de sortir de lecran
 X	gerer les degats
 /	barre de vie
-/	timer du combat
+/	timer du combat (moche ?)
 /	menu de demarrage
-	menu choix mode de jeu:
-		1v1
-		1vsIA (IA + en + forte)
-		IA vs IA
-	menu choix perso
-	menu choix map (chaque personne choisi + choix aleatoire entre les deux map vot�)
-/	menu fin de partie
-	IA
+X	menu choix mode de jeu:
+X		1v1
+/		1vsIA (IA + en + forte)
+		IA vs IA (X)
+X	menu choix perso
+	menu choix map (chaque personne choisi + choix aleatoire entre les deux map voté)
+/	menu fin de partie 
+X		ajouter image perso sur lecran + encadré le vainqueur
+X	IA
 	son
-	animations
+	animations (X)
 	ajouter de nouvelles attaques
-3	ajouter nouveaux perso
+4	ajouter nouveaux perso
 
-	TUTORIEL ??
+	TUTORIEL ??  <==
+
+
+	barre de vie: 
+X		-barre de vie trop basse a 0
+X		 => si attaque entre temps => reset la barre de degat pris + augmentation des degats ? (combo)
+
+
+X	position de demarrage + timer de debut de match ?
+X	position de fin a la place du sleep
+
+
+
+
+
+
 
 
 
