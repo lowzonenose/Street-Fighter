@@ -8,8 +8,10 @@ import Interface
 from setting import setting
 
 
-
 def main():
+	"""
+	Programme principal...
+	"""
 	pygame.init()
 	os.environ['SDL_VIDEO_WINDOW_POS'] = "{}, {}".format(50, 200)   #position la fenetre a un endroit precis pour l'ouverture
 	ecran = pygame.display.set_mode([setting["l_ecran"], int((setting["l_ecran"] * 448) / 1242)])			 #cree l'ecran
@@ -38,8 +40,8 @@ def main():
 					menu_principal = False
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
-					if event.button == 1: 
-						try:	
+					if event.button == 1:
+						try:
 							if interface.rect_play.collidepoint(event.pos):
 								menu_principal = False
 								menu_choix_mode = True
@@ -124,9 +126,9 @@ def main():
 						try:
 							if interface.validation_finale.collidepoint(event.pos):
 								selecteur_perso = False
-								init_player = True	
+								init_player = True
 						except:
-							pass				
+							pass
 
 			interface.selecteur_perso()
 			interface.bouton_selecteur()
@@ -140,7 +142,7 @@ def main():
 			pygame.display.flip()
 
 
-		if init_player:	
+		if init_player:
 			if mode == "1v1":
 				joueur1 = Player.Player(ecran, interface.choix_perso_joueur[0], 1, setting["speed"], (0,0,255))
 				joueur2 = Player.Player(ecran, interface.choix_perso_joueur[1], 2, setting["speed"], (255,0,0))
@@ -155,7 +157,7 @@ def main():
 			pygame.event.clear()
 
 		while mode:
-			for event in pygame.event.get():					
+			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					continuer = False
 					mode = False
@@ -168,9 +170,9 @@ def main():
 				joueur1.input_player(event)
 				joueur2.input_player(event)
 
-			joueur1.recup_action_active()													
-			joueur2.recup_action_active()	
-			
+			joueur1.recup_action_active()
+			joueur2.recup_action_active()
+
 			joueur1.update_hit_box(joueur2)
 			joueur2.update_hit_box(joueur1)
 			joueur1.gerer_degat(joueur2)
@@ -202,7 +204,7 @@ def main():
 
 
 		while menu_pause:
-			for event in pygame.event.get():					
+			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					continuer = False
 					menu_pause = False
@@ -212,7 +214,7 @@ def main():
 						if interface.rect_continuer.collidepoint(event.pos):
 							mode = True
 							menu_pause = False
-							
+
 						elif interface.rect_quitter.collidepoint(event.pos):
 							menu_pause = False
 							menu_principal = True
@@ -234,17 +236,17 @@ def main():
 						interface.transition((0,0,0))
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
-					if event.button == 1: 
+					if event.button == 1:
 						try:
 							if interface.rect_menu.collidepoint(event.pos):
 								menu_choix_mode = True
 								menu_fin_partie = False
 								interface.transition((255,255,255))
-							
+
 							elif interface.rect_quit.collidepoint(event.pos):
 								menu_fin_partie = False
 								continuer = False
-						except Exception as e: 
+						except Exception as e:
 							print(e)
 
 			interface.fin_de_partie(joueur1, joueur2)
