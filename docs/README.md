@@ -1,3 +1,6 @@
 test de doc
 
-* [Palyer](Player.m.html)
+![Image of Yaktocat](../image/logo.png)
+
+* [Player](Player.m.html)
+* [Interface](Interface.m.html)
